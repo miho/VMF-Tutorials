@@ -68,8 +68,7 @@ public class Main {
         MyParent parentClone = parent.vmf().content().deepCopy();
 
         // ensure that parentClone and parent are equal
-        System.out.println("equals: " + Objects.equals(parent,parentClone));
-
+        System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
 
@@ -85,6 +84,13 @@ public class Main {
         // ... and undo all changes
         changesToRevert.stream().forEach(c->{
             System.out.println("-------- undo change: --------");c.undo();});
+
+        // after undo we compare the clone and the empty parent
+        // we expect the parent to be empty (all changes are reverted)
+        System.out.println("--------");
+        System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
+        System.out.println(" -> parent:      " + parent);
+        System.out.println(" -> parentClone: " + parentClone);
 
     }
 }
