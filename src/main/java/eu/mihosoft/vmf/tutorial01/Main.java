@@ -57,6 +57,12 @@ public class Main {
         // cause a change by setting the name of child 1
         child1.setName("Child 1");
 
+        child1.setParentRef(parent);
+
+        System.exit(0);
+
+        parent.setAnotherChild(child1);
+
         System.out.println("--------");
 
         // get a read-only instance of parent
@@ -66,6 +72,8 @@ public class Main {
 
         // create a deep clone of parent
         MyParent parentClone = parent.vmf().content().deepCopy();
+
+
 
         // ensure that parentClone and parent are equal
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
@@ -92,6 +100,18 @@ public class Main {
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
+
+        // iterate over model:
+        System.out.println("--------");
+
+        MyChild c1 = parentClone.getChildren().get(0);
+        MyChild c2 = parentClone.getAnotherChild();
+
+        System.out.println("== : " + (c1 == c2));
+
+        parentClone.vmf().content().stream().forEach(vobj -> {
+            System.out.println(vobj);
+        });
 
     }
 }

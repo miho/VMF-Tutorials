@@ -9,6 +9,8 @@ interface MyParent {
     MyChild[] getChildren();
 
     String getName();
+
+    MyChild getAnotherChild();
 }
 
 interface MyChild {
@@ -16,4 +18,6 @@ interface MyChild {
     MyParent getParent();
 
     String getName();
+
+    MyParent getParentRef();
 }
