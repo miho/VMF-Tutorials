@@ -83,7 +83,8 @@ public class Main {
 
         // ... and undo all changes
         changesToRevert.stream().forEach(c->{
-            System.out.println("-------- undo change: --------");c.undo();});
+            System.out.println("-------- undo change: --------");c.undo();}
+        );
 
         // after undo we compare the clone and the empty parent
         // we expect the parent to be empty (all changes are reverted)
