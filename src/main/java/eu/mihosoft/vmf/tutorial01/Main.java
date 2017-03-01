@@ -59,8 +59,6 @@ public class Main {
 
         child1.setParentRef(parent);
 
-        System.exit(0);
-
         parent.setAnotherChild(child1);
 
         System.out.println("--------");
@@ -112,6 +110,10 @@ public class Main {
         parentClone.vmf().content().stream().forEach(vobj -> {
             System.out.println(vobj);
         });
+
+        System.out.println("parent-hashCode: " + parentClone.hashCode());
+
+        //System.exit(0);
 
     }
 }
