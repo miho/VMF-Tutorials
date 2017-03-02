@@ -1,6 +1,7 @@
 package eu.mihosoft.vmf.tutorial01;
 
 import eu.mihosoft.vmf.runtime.core.Change;
+import eu.mihosoft.vmf.runtime.core.VIterator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -92,6 +93,40 @@ public class Main {
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
+
+
+        // Iteration strategies:
+        NamedElement element = NamedElement.newInstance();
+        element.setName("element");
+
+        // we add the element twice to study the effect
+        // on different iteration strategies
+        parentClone.getElements().add(element);
+        parentClone.getElements().add(element);
+
+        // each node is visited exactly once
+        System.out.println("-------- Iteration: UNIQUE_NODE --------");
+        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(e->{
+            NamedElement namedElement = (NamedElement) e;
+
+            System.out.println(namedElement.getName());
+        });
+
+        // each property is visited exactly once
+        System.out.println("-------- Iteration: UNIQUE_PROPERTY --------");
+        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_PROPERTY).forEach(e->{
+            NamedElement namedElement = (NamedElement) e;
+
+            System.out.println(namedElement.getName());
+        });
+
+        // only the containment tree is visited
+        System.out.println("-------- Iteration: CONTAINMENT_TREE --------");
+        parentClone.vmf().content().stream(VIterator.IterationStrategy.CONTAINMENT_TREE).forEach(e->{
+            NamedElement namedElement = (NamedElement) e;
+
+            System.out.println(namedElement.getName());
+        });
 
     }
 }

@@ -11,11 +11,14 @@ interface NamedElement {
 interface MyParent extends NamedElement{
     @Contains(opposite = "parent")
     MyChild[] getChildren();
+
+    NamedElement[] getElements();
+
+
 }
 
 interface MyChild extends NamedElement{
     @Container(opposite="parent")
     MyParent getParent();
-
 }
 
