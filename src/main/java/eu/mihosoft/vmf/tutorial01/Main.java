@@ -112,7 +112,7 @@ public class Main {
             System.out.println(namedElement.getName());
         });
 
-        // each property is visited exactly once
+        // each property of each node is visited exactly once
         System.out.println("-------- Iteration: UNIQUE_PROPERTY --------");
         parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_PROPERTY).forEach(e->{
             NamedElement namedElement = (NamedElement) e;
@@ -120,7 +120,7 @@ public class Main {
             System.out.println(namedElement.getName());
         });
 
-        // only the containment tree is visited
+        // only the containment tree is visited (pure references are completely ignored)
         System.out.println("-------- Iteration: CONTAINMENT_TREE --------");
         parentClone.vmf().content().stream(VIterator.IterationStrategy.CONTAINMENT_TREE).forEach(e->{
             NamedElement namedElement = (NamedElement) e;
