@@ -13,8 +13,6 @@ interface MyParent extends NamedElement{
     MyChild[] getChildren();
 
     NamedElement[] getElements();
-
-
 }
 
 interface MyChild extends NamedElement{
