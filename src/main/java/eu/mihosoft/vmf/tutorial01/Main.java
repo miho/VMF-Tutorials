@@ -1,6 +1,7 @@
 package eu.mihosoft.vmf.tutorial01;
 
 import eu.mihosoft.vmf.runtime.core.Change;
+import eu.mihosoft.vmf.runtime.core.VIterator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,9 +58,9 @@ public class Main {
         // cause a change by setting the name of child 1
         child1.setName("Child 1");
 
-        child1.setParentRef(parent);
+        //child1.setParentRef(parent);
 
-        parent.setAnotherChild(child1);
+        parent.setAnotherChild(child1.clone());
 
         System.out.println("--------");
 
@@ -107,7 +108,7 @@ public class Main {
 
         System.out.println("== : " + (c1 == c2));
 
-        parentClone.vmf().content().stream().forEach(vobj -> {
+        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(vobj -> {
             System.out.println(vobj);
         });
 
