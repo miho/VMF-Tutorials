@@ -18,6 +18,11 @@ buildscript {
     }
 }
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+    distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
 repositories {
     mavenCentral()
     jcenter()
