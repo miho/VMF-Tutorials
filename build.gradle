@@ -42,7 +42,7 @@ sourceSets {
         }
     }
     vmf {
-
+        // vmf model sources
     }
 } 
 
@@ -79,9 +79,11 @@ tasks.withType(JavaCompile) {
     }
 }
 
-clean << { 
-    new File("$buildDir/vmf-src-gen/").listFiles().each {
-        f->f.delete();
+clean {
+    doLast {
+        new File("$buildDir/vmf-src-gen/").listFiles().each {
+            f -> f.delete();
+        }
     }
 }
 
