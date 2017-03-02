@@ -20,4 +20,6 @@ interface MyChild {
     String getName();
 
     MyParent getParentRef();
+
+    MyParent getParentRef2();
 }

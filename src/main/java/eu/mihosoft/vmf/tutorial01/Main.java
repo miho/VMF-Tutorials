@@ -58,9 +58,10 @@ public class Main {
         // cause a change by setting the name of child 1
         child1.setName("Child 1");
 
-        //child1.setParentRef(parent);
+        child1.setParentRef(parent);
+        child1.setParentRef2(parent);
 
-        parent.setAnotherChild(child1.clone());
+//        parent.setAnotherChild(child1);
 
         System.out.println("--------");
 
