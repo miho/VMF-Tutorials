@@ -1,7 +1,6 @@
 package eu.mihosoft.vmf.tutorial01;
 
 import eu.mihosoft.vmf.runtime.core.Change;
-import eu.mihosoft.vmf.runtime.core.VIterator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -58,11 +57,6 @@ public class Main {
         // cause a change by setting the name of child 1
         child1.setName("Child 1");
 
-        child1.setParentRef(parent);
-        child1.setParentRef2(parent);
-
-//        parent.setAnotherChild(child1);
-
         System.out.println("--------");
 
         // get a read-only instance of parent
@@ -72,8 +66,6 @@ public class Main {
 
         // create a deep clone of parent
         MyParent parentClone = parent.vmf().content().deepCopy();
-
-
 
         // ensure that parentClone and parent are equal
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
@@ -100,22 +92,6 @@ public class Main {
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
-
-        // iterate over model:
-        System.out.println("--------");
-
-        MyChild c1 = parentClone.getChildren().get(0);
-        MyChild c2 = parentClone.getAnotherChild();
-
-        System.out.println("== : " + (c1 == c2));
-
-        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(vobj -> {
-            System.out.println(vobj);
-        });
-
-        System.out.println("parent-hashCode: " + parentClone.hashCode());
-
-        //System.exit(0);
 
     }
 }
