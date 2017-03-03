@@ -15,7 +15,6 @@ public class Main {
      */
     public static void main(String[] args) {
 
-
         // create a new parent instance
         MyParent parent = MyParent.newInstance();
 
@@ -33,7 +32,6 @@ public class Main {
                     } else if (evt.listChange().isPresent()) {
                         System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
                     }
-
                 }
         );
 
@@ -68,8 +66,13 @@ public class Main {
         // create a deep clone of parent
         MyParent parentClone = parent.vmf().content().deepCopy();
 
-        // ensure that parentClone and parent are equal
+        // ensure that parentClone and parent are equal ...
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
+
+        // ... but not identical
+        System.out.println("parent != clone: " + (parent!=parentClone));
+
+        // use automatically generated toString() method
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
 
@@ -78,7 +81,7 @@ public class Main {
         // show number of changes
         System.out.println("#changes: " + parent.vmf().changes().all().size()+"\n");
 
-        // invert change order
+        // invert change order ...
         List<Change> changesToRevert = new ArrayList<>(parent.vmf().changes().all());
         Collections.reverse(changesToRevert);
 
@@ -99,8 +102,8 @@ public class Main {
         NamedElement element = NamedElement.newInstance();
         element.setName("element");
 
-        // we add the element twice to study the effect
-        // on different iteration strategies
+        // we add the element twice to study the effect on different
+        // iteration strategies
         parentClone.getElements().add(element);
         parentClone.getElements().add(element);
 
