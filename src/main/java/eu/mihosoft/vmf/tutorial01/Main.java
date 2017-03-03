@@ -130,6 +130,5 @@ public class Main {
 
             System.out.println(namedElement.getName());
         });
-
     }
 }
