@@ -19,7 +19,7 @@ buildscript {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.4'
+    gradleVersion = '4.0'
     distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
 }
 
@@ -61,8 +61,10 @@ task vmfGenModelSources(dependsOn: vmfClasses) {
     doLast {
         def urls = []
         // add model dependencies
-        urls.add(new File(sourceSets.vmf.output.classesDir.toString())
-            .toURI().toURL())
+        for(File clsDir : sourceSets.vmf.output.classesDirs) {
+            urls.add(new File(clsDir.toString())
+                    .toURI().toURL())
+        }
         
         eu.mihosoft.vmf.VMF.generate(new File("$buildDir/vmf-src-gen"),
             new URLClassLoader(urls as URL[], 

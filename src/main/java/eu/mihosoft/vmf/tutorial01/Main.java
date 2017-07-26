@@ -59,7 +59,7 @@ public class Main {
         System.out.println("--------");
 
         // get a read-only instance of parent
-        // use auto-completion to check that is has no setter methods
+        // use auto-completion to check that it has no setter methods
         // lists also contain read-only instances and are unmodifiable as well
         ReadOnlyMyParent parentRo = parent.asReadOnly();
 
@@ -90,7 +90,7 @@ public class Main {
             System.out.println("-------- undo change: --------");c.undo();}
         );
 
-        // after undo we compare the clone and the empty parent
+        // after undo we compare the clone and the empty parent (they are not equal)
         // we expect the parent to be empty (all changes are reverted)
         System.out.println("--------");
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));

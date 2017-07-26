@@ -2,6 +2,7 @@ package eu.mihosoft.vmf.tutorial01.vmfmodel;
 
 import eu.mihosoft.vmf.core.Container;
 import eu.mihosoft.vmf.core.Contains;
+import eu.mihosoft.vmf.core.InterfaceOnly;
 
 
 interface NamedElement {
