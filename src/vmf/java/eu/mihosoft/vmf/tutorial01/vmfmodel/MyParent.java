@@ -17,7 +17,7 @@ interface MyParent extends NamedElement{
 }
 
 interface MyChild extends NamedElement{
-    @Container(opposite="parent")
+    @Container(opposite="children")
     MyParent getParent();
 }
 
