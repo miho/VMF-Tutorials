@@ -9,6 +9,7 @@ interface NamedElement {
 }
 
 interface MyParent extends NamedElement{
+
     @Contains(opposite = "parent")
     MyChild[] getChildren();
 

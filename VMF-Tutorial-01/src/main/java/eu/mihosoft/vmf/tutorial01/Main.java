@@ -40,7 +40,7 @@ public class Main {
 
         System.out.println("--------");
 
-        // create an new child
+        // create a new child
         MyChild child1 = MyChild.newInstance();
 
         // add the child to the parent
