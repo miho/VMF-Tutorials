@@ -2,6 +2,11 @@
 
 This collection of tutorials gives an introduction to VMF and its use in regular Java projects.
 
+## Contents
+
+- [Introduction](https://github.com/miho/VMF-Tutorials/blob/master/README.md#introduction)
+- [Defining your first model](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md)
+
 ## Introduction
 
 VMF is a lightweight modeling framework for the Java platform. It generates/supports:
@@ -20,8 +25,3 @@ VMF is a lightweight modeling framework for the Java platform. It generates/supp
 - ...
 
 VMF integrates well into manual Java implementations. It comes with a Gradle plugin which means that using VMF is very simple. The tutorials will walk you through all major aspects of VMF.
-
-## Contents
-
-- [Introduction](https://github.com/miho/VMF-Tutorials/blob/master/README.md#introduction)
-- [Defining your first model](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md)
