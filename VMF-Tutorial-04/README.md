@@ -1,36 +1,19 @@
-# VMF Tutorial 1
+# VMF Tutorial 4
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-05/README.md)
 
-## Defining your First Model
+
+# TBD
+
+## Undo/Redo
 
 ### What you will learn
 
 In this tutorial you will learn how to
 
-- setup a Gradle project for VMF
-- create a basic model
-- use the generated implementation
+- use the undo/redo API
 
-### Setting up a Gradle Project
-
-Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have to add the VMF plugin id, e.g. via
-
-```gradle
-plugins {
-  id "eu.mihosoft.vmf" version "0.1.1" // use latest version
-}
-```
-Now we can configure VMF and specify which version shall be used:
-
-```gradle
-vmf {
-    version = '0.1' // use desired VMF version
-}
-```
-
-The plugin adds a source set `src/vmf/java` to our Gradle project intended for the model definition. 
-In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
+### The Model
 
 ```java
 package eu.mihosoft.vmf.tutorial02.vmfmodel;
