@@ -91,7 +91,7 @@ parent2.setName("Parent 2");
 // 2. parent of child1 is now parent2
 parent2.setChild(child1);
 ```
-If we check the output from the change listener we can clearly see that `parent.getChild()` as ben updated automatically. Instead of `child1` it returns `null` since `child1` belongs to `parent2` now.
+If we check the output from the change listener we can clearly see that `parent.getChild()` has been updated automatically. Instead of `child1` it returns `null` since `child1` belongs to `parent2` now.
 
 `child1.getParent()` should now return `Parent 2` as its parent:
 
