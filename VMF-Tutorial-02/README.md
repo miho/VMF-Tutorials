@@ -1,8 +1,8 @@
-# VMF Tutorial 1
+# VMF Tutorial 2
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-03/README.md)
 
-## Defining your First Model
+## Using the Change Notification API
 
 ### What you will learn
 
