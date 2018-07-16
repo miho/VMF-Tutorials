@@ -7,6 +7,7 @@ This collection of tutorials gives an introduction to VMF and its use in regular
 - [Introduction](https://github.com/miho/VMF-Tutorials/blob/master/README.md#introduction)
 - [Defining your first model](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md)
 - [Using the Change Notification API](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-02/README.md)
+- [Containment References](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03/README.md)
 
 ## Introduction
 
