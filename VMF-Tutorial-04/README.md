@@ -78,7 +78,7 @@ root.getChildren().add(child1);
 child1.setName("#2");
 ```
 
-Okay, now it's time to clone the `root` instance so we can check whether undoing changes has an effect:
+Okay, now it's time to clone the `root` instance so we can check later whether undoing changes has an effect:
 
 ```java
 // create a deep clone of root
