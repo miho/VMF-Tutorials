@@ -4,7 +4,27 @@
 
 ## Defining your First Model
 
-A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements all of that for us.
+A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model VMF generated a lot of useful API:
+
+```java
+
+// Parent.java                                    /**/  // Main.java
+__________________________________________________/**/_________________________________________________
+package eu.mihosoft.vmf.tutorial01.vmfmodel;      /**/  package eu.mihosoft.vmf.tutorial01.vmfmodel; 
+                                                  /**/
+interface Parent {                                /**/  public class Main {
+    String getName();                             /**/
+}                                                 /**/  }
+```
+
+
+## What you will learn
+
+In this tutorial you will learn how to
+
+- setup a Gradle project for VMF
+- create a basic model
+- use the generated implementation
 
 ### Setting up a Gradle Project
 
