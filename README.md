@@ -1,4 +1,5 @@
 # VMF-Tutorials
+[![Join the chat at https://gitter.im/VMF_/Lobby](https://badges.gitter.im/VMF_/Lobby.svg)](https://gitter.im/VMF_/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This collection of tutorials gives an introduction to VMF and its use in regular Java projects.
 
