@@ -41,7 +41,7 @@ public class Main {
         Child child1 = Child.newInstance();
 
         // add the child to the parent
-        parent.getChildren().add(child1);
+        parent.setChild(child1);
 
         System.out.println("--------");
 
@@ -63,7 +63,8 @@ public class Main {
         // adding child 1 to parent2 has several interesting effects
         // 1. child1 is removed from parent1 (check change notification output)
         // 2. parent of child1 is now parent2
-        parent2.getChildren().add(child1);
+        parent2.setChild(child1);
+        System.out.println("--------");
 
         // containment references make it possible: the child automatically knows its new parent
         System.out.println("my new parent: " + child1.getParent().getName());
