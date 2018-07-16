@@ -1,106 +1,108 @@
-# VMF Tutorial 1
+# VMF Tutorial 3
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-04/README.md)
 
-## Defining your First Model
+## Containment References
 
 ### What you will learn
 
 In this tutorial you will learn how to
 
-- setup a Gradle project for VMF
-- create a basic model
-- use the generated implementation
+- declare containment references
 
-### Setting up a Gradle Project
+### Declaring Containment References
 
-Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have to add the VMF plugin id, e.g. via
-
-```gradle
-plugins {
-  id "eu.mihosoft.vmf" version "0.1.1" // use latest version
-}
-```
-Now we can configure VMF and specify which version shall be used:
-
-```gradle
-vmf {
-    version = '0.1' // use desired VMF version
-}
-```
-
-The plugin adds a source set `src/vmf/java` to our Gradle project intended for the model definition. 
-In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
+For this tutorial we use an updated version of the model definition. Instead of just a single interface, we use a `Parent` and a `Child` interface and declare a containment reference.
 
 ```java
-package eu.mihosoft.vmf.tutorial02.vmfmodel;
+package eu.mihosoft.vmf.tutorial03.vmfmodel;
+
+import eu.mihosoft.vmf.core.*;
 
 interface Parent {
+
+    @Contains(opposite = "parent")
+    Child getChild();
+
     String getName();
 }
-```
 
-The source directories of our tutorial project looks like this:
+interface Child {
+    @Container(opposite="child")
+    Parent getParent();
 
-```
-src
-├── main/java ...
-│         └── ...
-│   
-└── vmf/java
-          ├── /eu/mihosoft/vmf/tutorial01/vmfmodel/Parent.java
-          └── ...
-```
-
-### Running the Code Generator
-
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task, e.g. via
-
-```
-./gradlew vmfGenModelSources
-```
-
-VMF should show the following output:
-
-```
-> Task :vmfGenModelSources
- -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
-```
-
-### Using the Code
-
-To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
-
-```java
-package eu.mihosoft.vmf.tutorial02;
-
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        // create a new parent instance
-        Parent parent = Parent.newInstance();
-        
-        // set parent's name
-        parent.setName("My Name");
-        
-        // check that name is set
-        if("My Name".equals(parent.getName())) {
-          System.out.println("name is correctly set");
-        } else {
-          System.out.println("something went wrong :(");
-        }
-        
-    }
+    int getValue();
 }
 ```
 
-Congrats, you have successfully created your first VMF model.
+In the above code sample the `Parent` interface declares that it contains a `Child` object. Thus, we use the `@Contains()` annotation and declare the `parent` property of the `Child` interface as the opposite. In the `Child` interface we use the `@Container` annotation to indicate that the containing property in `Parent` is the `child` property.
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+Now let's instantiate a `Parent`, a `Child` and add the child to the parent.
+
+```java
+Parent parent = Parent.newInstance();
+
+parent.setName("Parent 1");
+
+// register change listener
+parent.vmf().changes().addListener(
+   (evt)-> {
+       System.out.println("evt: " + evt.propertyName());
+
+       if(evt.propertyChange().isPresent()) {
+          System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
+          System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
+       } else if (evt.listChange().isPresent()) {
+          System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
+       }
+   }
+);
+
+Child child1 = Child.newInstance();
+
+// add the child to the parent
+parent.setChild(child1);
+```
+
+Now we can check the `getParent()` method, i.e. the `parent`property:
+
+```java
+// containment references make it possible: the child automatically knows its parent
+System.out.println("my parent: " + child1.getParent().getName());
+```
+
+If we make changes to `child1` we will get notified by the change listener even though we didn't add it to `child1` explicitly. 
+
+```java
+// cause a change by setting the value property of child 1
+// child 1 is implicitly observed
+child1.setValue(42);
+```
+
+Since a containment reference cannot be shared between multiple containers, adding the `child1` instance to another `Parent` should remove `child1`from `parent`. Let's try this:
+
+```java
+// now we create a second parent
+Parent parent2 = Parent.newInstance();
+parent2.setName("Parent 2");
+
+// adding child 1 to parent2 has several interesting effects
+// 1. child1 is removed from parent1 (check change notification output)
+// 2. parent of child1 is now parent2
+parent2.setChild(child1);
+```
+If we check the output from the change listener we can clearly see that `parent.getChild()` has been updated automatically. Instead of `child1` it returns `null` since `child1` belongs to `parent2` now.
+
+`child1.getParent()` should now return `Parent 2` as its parent:
+
+```java
+// containment references make it possible: the child automatically knows its new parent
+System.out.println("my new parent: " + child1.getParent().getName());
+```
+
+Congrats, you have successfully declared your first containment reference.  If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03).
+
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-04/README.md)
 
 
 
