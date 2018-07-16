@@ -80,7 +80,11 @@ public class Main {
         parent.setName("My Name");
         
         // check that name is set
-        assert "My Name".equals(parent.getName());
+        if("My Name".equals(parent.getName())) {
+          System.out.println("name is correctly set");
+        } else {
+          System.out.println("something went wrong :(");
+        }
         
     }
 }
