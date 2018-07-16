@@ -1,5 +1,5 @@
 plugins {
-    id "eu.mihosoft.vmf" version "0.1.1"
+    id "eu.mihosoft.vmf" version "0.1.2"
 }
 
 // configure vmf

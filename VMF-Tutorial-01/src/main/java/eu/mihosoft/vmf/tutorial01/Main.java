@@ -16,7 +16,7 @@ public class Main {
     public static void main(String[] args) {
 
         // create a new parent instance
-        MyParent parent = MyParent.newInstance();
+        Parent parent = Parent.newInstance();
 
         // start change recorder for undo
         parent.vmf().changes().start();
@@ -54,17 +54,17 @@ public class Main {
         System.out.println("--------");
 
         // cause a change by setting the name of child 1
-        child1.setName("Child 1");
+        child1.setValue(42);
 
         System.out.println("--------");
 
         // get a read-only instance of parent
         // use auto-completion to check that it has no setter methods
         // lists also contain read-only instances and are unmodifiable as well
-        ReadOnlyMyParent parentRo = parent.asReadOnly();
+        ReadOnlyParent parentRo = parent.asReadOnly();
 
         // create a deep clone of parent
-        MyParent parentClone = parent.vmf().content().deepCopy();
+        Parent parentClone = parent.vmf().content().deepCopy();
 
         // ensure that parentClone and parent are equal ...
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
@@ -96,39 +96,5 @@ public class Main {
         System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
         System.out.println(" -> parent:      " + parent);
         System.out.println(" -> parentClone: " + parentClone);
-
-
-        // Iteration strategies:
-        NamedElement element = NamedElement.newInstance();
-        element.setName("element");
-
-        // we add the element twice to study the effect on different
-        // iteration strategies
-        parentClone.getElements().add(element);
-        parentClone.getElements().add(element);
-
-        // each node is visited exactly once
-        System.out.println("-------- Iteration: UNIQUE_NODE --------");
-        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(e->{
-            NamedElement namedElement = (NamedElement) e;
-
-            System.out.println(namedElement.getName());
-        });
-
-        // each property of each node is visited exactly once
-        System.out.println("-------- Iteration: UNIQUE_PROPERTY --------");
-        parentClone.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_PROPERTY).forEach(e->{
-            NamedElement namedElement = (NamedElement) e;
-
-            System.out.println(namedElement.getName());
-        });
-
-        // only the containment tree is visited (pure references are completely ignored)
-        System.out.println("-------- Iteration: CONTAINMENT_TREE --------");
-        parentClone.vmf().content().stream(VIterator.IterationStrategy.CONTAINMENT_TREE).forEach(e->{
-            NamedElement namedElement = (NamedElement) e;
-
-            System.out.println(namedElement.getName());
-        });
     }
 }

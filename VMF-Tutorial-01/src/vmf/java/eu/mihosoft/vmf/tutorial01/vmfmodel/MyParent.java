@@ -4,20 +4,18 @@ import eu.mihosoft.vmf.core.Container;
 import eu.mihosoft.vmf.core.Contains;
 
 
-interface NamedElement {
-    String getName();
-}
-
-interface MyParent extends NamedElement{
+interface Parent {
 
     @Contains(opposite = "parent")
     MyChild[] getChildren();
 
-    NamedElement[] getElements();
+    String getName();
 }
 
-interface MyChild extends NamedElement{
+interface MyChild {
     @Container(opposite="children")
-    MyParent getParent();
+    Parent getParent();
+
+    int getValue();
 }
 
