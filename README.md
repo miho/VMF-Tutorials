@@ -24,4 +24,9 @@ VMF is a lightweight modeling framework for the Java platform. It generates/supp
 - delegation
 - ...
 
+A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model VMF generated a lot of useful API:
+
+<img src="resources/img/vmf-01.svg">
+
 VMF integrates well into manual Java implementations. It comes with a Gradle plugin which means that using VMF is very simple. The tutorials will walk you through all major aspects of VMF.
+
