@@ -21,6 +21,33 @@ vmf {
 }
 ```
 
+The plugin adds a source set `src/vmf/java` to our Gradle project intended for the model definition. The source directories of our tutorial project looks like this:
+
+```
+src
+├── main
+│   ├── java
+│   │   └── eu
+│   │       └── mihosoft
+│   │           └── vmf
+│   │               └── tutorial01
+│   │                   └── Main.java
+│   └── resources
+├── test
+│   ├── java
+│   └── resources
+└── vmf
+    ├── java
+    │   └── eu
+    │       └── mihosoft
+    │           └── vmf
+    │               └── tutorial01
+    │                   └── vmfmodel
+    │                       └── MyParent.java
+    └── resources
+```
+
+
 In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
 
 ```java
