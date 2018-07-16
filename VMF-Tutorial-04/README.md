@@ -1,6 +1,7 @@
 # VMF Tutorial 4
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-05/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
+
 
 # TBD
 
@@ -34,6 +35,8 @@ interface Node {
 
 }
 ```
+
+### The Code
 
 First we create a `Node` instance and enable change recording for using the undo/redo API:
 
@@ -99,55 +102,45 @@ System.out.println(" -> root:      " + root);
 System.out.println(" -> rootClone: " + rootClone);
 ```
 
-### Running the Code Generator
-
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task, e.g. via
-
-```
-./gradlew vmfGenModelSources
-```
-
-VMF should show the following output:
-
-```
-> Task :vmfGenModelSources
- -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
-```
-
-### Using the Code
-
-To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
+To check how many changes were recorded, we just access the collection that holds all changes:
 
 ```java
-package eu.mihosoft.vmf.tutorial02;
-
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        // create a new parent instance
-        Parent parent = Parent.newInstance();
-        
-        // set parent's name
-        parent.setName("My Name");
-        
-        // check that name is set
-        if("My Name".equals(parent.getName())) {
-          System.out.println("name is correctly set");
-        } else {
-          System.out.println("something went wrong :(");
-        }
-        
-    }
-}
+// show number of changes
+System.out.println("#changes: " + root.vmf().changes().all().size()+"\n");
 ```
 
-Congrats, you have successfully created your first VMF model.
+To undo the changes we just have to revert the order of the change list
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+```java
+// invert change order ...
+List<Change> changesToRevert = new ArrayList<>(root.vmf().changes().all());
+Collections.reverse(changesToRevert);
+```
+and undo the changes
+
+```java
+// ... and undo all changes
+changesToRevert.stream().forEach(c->{
+    System.out.println("-------- undo change: --------");c.undo();}
+);
+```
+The change listener will recognize the undo actions as changes as well. So watch the output for those changes.
+
+The `root` object should be empty. The `rootClone`, however, should contain all changes. Here's how to check that: 
+
+```java
+// after undo we compare the clone and the empty root (they are not equal)
+// we expect the root to be empty (all changes are reverted)
+System.out.println("--------");
+System.out.println("root eq rootClone: " + Objects.equals(root,rootClone));
+System.out.println(" -> root:          " + root);
+System.out.println(" -> rootClone:     " + rootClone);
+```
+
+Congrats, you have successfully used the VMF undo/redo API.
+
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
+
 
 
 
