@@ -44,10 +44,48 @@ src
           └── ...
 ```
 
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task. VMF should show the following output:
+### Running the Code Generator
+
+After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task, e.g. via
+
+```
+./gradlew vmfGenModelSources
+```
+
+VMF should show the following output:
 
 ```
 > Task :vmfGenModelSources
  -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
 ```
+
+### Using the Code
+
+To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
+
+```
+package eu.mihosoft.vmf.tutorial01;
+
+public class Main {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        // create a new parent instance
+        Parent parent = Parent.newInstance();
+        
+        // set parent's name
+        parent.setName("My Name");
+        
+        // check that name is set
+        assert "My Name".equals(parent.getName());
+        
+    }
+}
+```
+
+
+
 
