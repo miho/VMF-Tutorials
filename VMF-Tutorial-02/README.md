@@ -1,36 +1,18 @@
-# VMF Tutorial 1
+# VMF Tutorial 2
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-03/README.md)
 
-## Defining your First Model
+## Using the Change Notification API
 
 ### What you will learn
 
 In this tutorial you will learn how to
 
-- setup a Gradle project for VMF
-- create a basic model
-- use the generated implementation
+- use the change notification API to listen to property changes
 
-### Setting up a Gradle Project
+### Defining the Model
 
-Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have to add the VMF plugin id, e.g. via
-
-```gradle
-plugins {
-  id "eu.mihosoft.vmf" version "0.1.1" // use latest version
-}
-```
-Now we can configure VMF and specify which version shall be used:
-
-```gradle
-vmf {
-    version = '0.1' // use desired VMF version
-}
-```
-
-The plugin adds a source set `src/vmf/java` to our Gradle project intended for the model definition. 
-In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
+For this tutorial we reuse the model from [Tutorial 1](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-01/README.md)
 
 ```java
 package eu.mihosoft.vmf.tutorial02.vmfmodel;
@@ -40,36 +22,9 @@ interface Parent {
 }
 ```
 
-The source directories of our tutorial project looks like this:
+### Listening to Changes
 
-```
-src
-├── main/java ...
-│         └── ...
-│   
-└── vmf/java
-          ├── /eu/mihosoft/vmf/tutorial01/vmfmodel/Parent.java
-          └── ...
-```
-
-### Running the Code Generator
-
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task, e.g. via
-
-```
-./gradlew vmfGenModelSources
-```
-
-VMF should show the following output:
-
-```
-> Task :vmfGenModelSources
- -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
-```
-
-### Using the Code
-
-To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
+First, we create a new instance of `Parent`. Now we can register a change listener. Notice, how all VMF related API can be accessed via the `vmf()` method. Here's the code:
 
 ```java
 package eu.mihosoft.vmf.tutorial02;
@@ -83,24 +38,48 @@ public class Main {
 
         // create a new parent instance
         Parent parent = Parent.newInstance();
-        
-        // set parent's name
-        parent.setName("My Name");
-        
-        // check that name is set
-        if("My Name".equals(parent.getName())) {
-          System.out.println("name is correctly set");
-        } else {
-          System.out.println("something went wrong :(");
-        }
+
+        // register change listener
+        parent.vmf().changes().addListener(
+                (evt)-> {
+                    System.out.println("evt: " + evt.propertyName());
+
+                    if(evt.propertyChange().isPresent()) {
+                        System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
+                        System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
+                    } else if (evt.listChange().isPresent()) {
+                        System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
+                    }
+                }
+        );
+
+        // cause a change by setting the name of parent
+        parent.setName("Parent 1");
+
+        // cause another  change
+        parent.setName("Parent 2");
         
     }
 }
 ```
 
-Congrats, you have successfully created your first VMF model.
+After registering the listener, we can make some changes to the name property (see `parent.setName(...)` calls). The output will look like this:
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+```
+> Task :run
+evt: name
+  -> oldValue: null
+  -> newValue: Parent 1
+evt: name
+  -> oldValue: Parent 1
+  -> newValue: Parent 2
+```
+
+This is exactly what we expected. The first change indicates that property `name` was previously `null` and is now set to "Parent 1". The second change indicates that the `name` property was previously set to "Parent 1" and is now set to "Parent 2".
+
+Congrats, you have learned how to use the change notification API.
+
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-03/README.md)
 
 
 
