@@ -100,11 +100,7 @@ If we check the output from the change listener we can clearly see that `parent.
 System.out.println("my new parent: " + child1.getParent().getName());
 ```
 
-
-
-
-
-Congrats, you have successfully created your first VMF model.
+Congrats, you have successfully declared your first containment reference.
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-04/README.md)
 
