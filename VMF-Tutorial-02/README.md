@@ -1,2 +1,0 @@
-# VMF Tutorial 1
-
