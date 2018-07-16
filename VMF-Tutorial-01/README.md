@@ -6,17 +6,7 @@
 
 A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model VMF generated a lot of useful API:
 
-```java
-
-// Parent.java                                    /**/  // Main.java
-__________________________________________________/**/_________________________________________________
-package eu.mihosoft.vmf.tutorial01.vmfmodel;      /**/  package eu.mihosoft.vmf.tutorial01.vmfmodel; 
-                                                  /**/
-interface Parent {                                /**/  public class Main {
-    String getName();                             /**/
-}                                                 /**/  }
-```
-
+<img src="resources/img/vmf-01.svg">
 
 ## What you will learn
 
