@@ -44,5 +44,10 @@ src
           └── ...
 ```
 
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task.
+After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task. VMF should show the following output:
+
+```
+> Task :vmfGenModelSources
+ -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
+```
 
