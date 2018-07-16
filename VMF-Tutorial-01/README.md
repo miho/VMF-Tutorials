@@ -1,5 +1,7 @@
 # VMF Tutorial 1
 
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md)
+
 ## Defining your First Model
 
 A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements all of that for us.
@@ -40,7 +42,7 @@ src
 │         └── ...
 │   
 └── vmf/java
-          ├── /eu/mihosoft/vmf/tutorial01/vmfmodel/MyParent.java
+          ├── /eu/mihosoft/vmf/tutorial01/vmfmodel/Parent.java
           └── ...
 ```
 
@@ -91,6 +93,8 @@ public class Main {
 ```
 
 Congrats, you have successfully created your first VMF model.
+
+[NEXT](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
 
 
 
