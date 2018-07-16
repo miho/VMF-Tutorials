@@ -77,7 +77,7 @@ evt: name
 
 This is exactly what we expected. The first change indicates that property `name` was previously `null` and is now set to "Parent 1". The second change indicates that the `name` property was previously set to "Parent 1" and is now set to "Parent 2".
 
-Congrats, you have learned how to use the change notification API.
+Congrats, you have learned how to use the change notification API.  If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-02).
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-03/README.md)
 
