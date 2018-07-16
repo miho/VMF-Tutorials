@@ -18,9 +18,6 @@ public class Main {
         // create a new parent instance
         Parent parent = Parent.newInstance();
 
-        // start change recorder for undo
-        parent.vmf().changes().start();
-
         // register change listener
         parent.vmf().changes().addListener(
                 (evt)-> {
@@ -54,48 +51,24 @@ public class Main {
         System.out.println("--------");
 
         // cause a change by setting the value property of child 1
+        // child 1 is implicitly observed
         child1.setValue(42);
 
         System.out.println("--------");
 
-        // get a read-only instance of parent
-        // use auto-completion to check that it has no setter methods
-        // lists also contain read-only instances and are unmodifiable as well
-        ReadOnlyParent parentRo = parent.asReadOnly();
+        // now we create a second parent
+        Parent parent2 = Parent.newInstance();
+        parent2.setName("Parent 2");
 
-        // create a deep clone of parent
-        Parent parentClone = parent.vmf().content().deepCopy();
+        // adding child 1 to parent2 has several interesting effects
+        // 1. child1 is removed from parent1 (check change notification output)
+        // 2. parent of child1 is now parent2
+        parent2.getChildren().add(child1);
 
-        // ensure that parentClone and parent are equal ...
-        System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
-
-        // ... but not identical
-        System.out.println("parent != clone: " + (parent!=parentClone));
-
-        // use automatically generated toString() method
-        System.out.println(" -> parent:      " + parent);
-        System.out.println(" -> parentClone: " + parentClone);
+        // containment references make it possible: the child automatically knows its new parent
+        System.out.println("my new parent: " + child1.getParent().getName());
 
         System.out.println("--------");
-
-        // show number of changes
-        System.out.println("#changes: " + parent.vmf().changes().all().size()+"\n");
-
-        // invert change order ...
-        List<Change> changesToRevert = new ArrayList<>(parent.vmf().changes().all());
-        Collections.reverse(changesToRevert);
-
-        // ... and undo all changes
-        changesToRevert.stream().forEach(c->{
-            System.out.println("-------- undo change: --------");c.undo();}
-        );
-
-        // after undo we compare the clone and the empty parent (they are not equal)
-        // we expect the parent to be empty (all changes are reverted)
-        System.out.println("--------");
-        System.out.println("parent eq clone: " + Objects.equals(parent,parentClone));
-        System.out.println(" -> parent:      " + parent);
-        System.out.println(" -> parentClone: " + parentClone);
 
     }
 }
