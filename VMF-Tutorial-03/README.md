@@ -1,6 +1,6 @@
 # VMF Tutorial 3
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-04/README.md)
 
 ## Containment References
 
@@ -79,11 +79,34 @@ If we make changes to `child1` we will get notified by the change listener even 
 child1.setValue(42);
 ```
 
+Since a containment reference cannot be shared between multiple containers, adding the `child1` instance to another `Parent` should remove `child1`from `parent`. Let's try this:
+
+```java
+// now we create a second parent
+Parent parent2 = Parent.newInstance();
+parent2.setName("Parent 2");
+
+// adding child 1 to parent2 has several interesting effects
+// 1. child1 is removed from parent1 (check change notification output)
+// 2. parent of child1 is now parent2
+parent2.setChild(child1);
+```
+If we check the output from the change listener we can clearly see that `parent.getChild()` as ben updated automatically. Instead of `child1` it returns `null` since `child1` belongs to `parent2` now.
+
+`child1.getParent()` should now return `Parent 2` as its parent:
+
+```java
+// containment references make it possible: the child automatically knows its new parent
+System.out.println("my new parent: " + child1.getParent().getName());
+```
+
+
+
 
 
 Congrats, you have successfully created your first VMF model.
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-04/README.md)
 
 
 
