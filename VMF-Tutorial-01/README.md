@@ -63,7 +63,7 @@ VMF should show the following output:
 
 To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
 
-```
+```java
 package eu.mihosoft.vmf.tutorial01;
 
 public class Main {
@@ -86,6 +86,7 @@ public class Main {
 }
 ```
 
+Congrats, you have successfully created your first VMF model.
 
 
 
