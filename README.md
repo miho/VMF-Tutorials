@@ -8,5 +8,5 @@ VMF integrates well into manual Java implementations. It comes with a Gradle plu
 
 ## Contents
 
-- [introduction]()
+- [introduction](https://github.com/miho/VMF-Tutorials/blob/master/README.md#introduction)
 - [defining your first model]()
