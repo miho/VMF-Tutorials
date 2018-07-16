@@ -2,9 +2,6 @@
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
 
-
-# TBD
-
 ## Undo/Redo
 
 ### What you will learn
@@ -137,7 +134,7 @@ System.out.println(" -> root:          " + root);
 System.out.println(" -> rootClone:     " + rootClone);
 ```
 
-Congrats, you have successfully used the VMF undo/redo API.
+Congrats, you have successfully used the VMF undo/redo API. As allways, if you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05).
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
 
