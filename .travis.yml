@@ -30,10 +30,10 @@ cache:
    - /Users/travis/build/miho/
   
 script:
-    - pwd
-    - cd VMF-Tutorial-01 && ./gradlew run
-    - cd VMF-Tutorial-02 && ./gradlew run
-    - cd VMF-Tutorial-03 && ./gradlew run
-    - cd VMF-Tutorial-04 && ./gradlew run
-    - cd VMF-Tutorial-05 && ./gradlew run
-    - cd VMF-Tutorial-06 && ./gradlew run
+    - export CWD=$(pwd)
+    - cd $CWD/VMF-Tutorial-01 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-02 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-03 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-04 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-05 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-06 && ./gradlew run
