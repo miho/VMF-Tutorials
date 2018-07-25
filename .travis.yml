@@ -36,4 +36,3 @@ script:
     - cd $CWD/VMF-Tutorial-03 && ./gradlew run
     - cd $CWD/VMF-Tutorial-04 && ./gradlew run
     - cd $CWD/VMF-Tutorial-05 && ./gradlew run
-    - cd $CWD/VMF-Tutorial-06 && ./gradlew run
