@@ -5,24 +5,26 @@ matrix:
     - os: linux
       language: java
       jdk:  oraclejdk8
-      install: true
     - os: linux
       language: java
       jdk:  oraclejdk9
-      install: true
     - os: linux
       language: java
       jdk:  oraclejdk10
-      install: true
+    - os: linux
+      language: java
+      jdk:  openjdk11
     - os: linux
       language: java
       jdk:  openjdk-ea
-      install: true
     allow_failures:
        - os: linux
          language: java
          jdk:  openjdk-ea
-         install: true
+       - os: linux
+         language: java
+         jdk:  openjdk11
+      
       
  #   - os: osx
  #     language: java
