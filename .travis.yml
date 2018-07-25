@@ -16,12 +16,12 @@ matrix:
       install: true
     - os: linux
       language: java
-      jdk:  oraclejdk-ea
+      jdk:  openjdk-ea
       install: true
     
     
     allow_failures:
-    -jdk: oraclejdk-ea
+    -jdk: openjdk-ea
       
  #   - os: osx
  #     language: java
