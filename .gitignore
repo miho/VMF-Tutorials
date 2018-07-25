@@ -1,7 +1,16 @@
-/.gradle/
-/.nb-gradle/
-/.idea/
-/build/
+/**/.gradle/
+/**/.nb-gradle/
+/**/.idea/
+/**/build/
 
 .dropbox.attr
-VMF-Tutorial-01.iml
+VMF-Tutorial-05.iml
+
+/**/out/
+/**/bin/
+
+/**/.classpath
+/**/.project
+
+/**/.vscode/
+/**/.settings

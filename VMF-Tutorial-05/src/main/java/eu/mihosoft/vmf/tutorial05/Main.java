@@ -15,10 +15,14 @@ public class Main {
 
         Node node2 = Node.newInstance();
 
-        // copy properties defined in 'WithName' from 'node1' to 'node2'
+        // reference properties defined in 'WithName' from 'node1'
+        // and apply it to 'node2':
+        // - using the builder of a class we inherit from allows to selectively
+        //   apply state defined in this class to another instance
         WithName.newBuilder().applyFrom(node1).applyTo(node2);
 
-        System.out.println("> node1.name == node2.name: " + node1.getName().equals(node2.getName()));
+        System.out.println("> node1.name == node2.name: " + node1.getName().
+            equals(node2.getName()));
 
     }
 }
