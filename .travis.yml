@@ -42,8 +42,8 @@ cache:
   
 script:
     - export CWD=$(pwd)
-    - cd $CWD/VMF-Tutorial-01 && ./gradlew run
-    - cd $CWD/VMF-Tutorial-02 && ./gradlew run
-    - cd $CWD/VMF-Tutorial-03 && ./gradlew run
-    - cd $CWD/VMF-Tutorial-04 && ./gradlew run
-    - cd $CWD/VMF-Tutorial-05 && ./gradlew run
+    - cd $CWD/VMF-Tutorial-01 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-02 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-03 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-04 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-05 && ./gradlew run --stacktrace
