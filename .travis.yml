@@ -30,9 +30,9 @@ cache:
    - /Users/travis/build/miho/
   
 script:
-    - cd VMF-Tutorial01 && ./gradlew run
-    - cd VMF-Tutorial02 && ./gradlew run
-    - cd VMF-Tutorial03 && ./gradlew run
-    - cd VMF-Tutorial04 && ./gradlew run
-    - cd VMF-Tutorial05 && ./gradlew run
-    - cd VMF-Tutorial06 && ./gradlew run
+    - cd VMF-Tutorial-01 && ./gradlew run
+    - cd VMF-Tutorial-02 && ./gradlew run
+    - cd VMF-Tutorial-03 && ./gradlew run
+    - cd VMF-Tutorial-04 && ./gradlew run
+    - cd VMF-Tutorial-05 && ./gradlew run
+    - cd VMF-Tutorial-06 && ./gradlew run
