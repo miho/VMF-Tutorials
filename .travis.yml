@@ -19,7 +19,10 @@ matrix:
       jdk:  openjdk-ea
       install: true
     allow_failures:
-       -jdk: openjdk-ea
+       - os: linux
+         language: java
+         jdk:  openjdk-ea
+         install: true
       
  #   - os: osx
  #     language: java
