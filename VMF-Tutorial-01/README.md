@@ -18,14 +18,14 @@ Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have
 
 ```gradle
 plugins {
-  id "eu.mihosoft.vmf" version "0.1.1" // use latest version
+  id "eu.mihosoft.vmf" version "0.1.3" // use latest version
 }
 ```
 Now we can configure VMF and specify which version shall be used:
 
 ```gradle
 vmf {
-    version = '0.1' // use desired VMF version
+    version = '0.1.1' // use desired VMF version
 }
 ```
 
