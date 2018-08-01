@@ -100,6 +100,33 @@ public class Main {
 
 Congrats, you have successfully created your first VMF model. If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-01).
 
+## Running the Tutorial
+
+To run this code, just call the `run` task of your gradle project:
+
+### Requirements
+
+- Java >= 1.8
+- Internet connection (dependencies are downloaded automatically)
+- IDE: [Gradle](http://www.gradle.org/) Plugin (not necessary for command line usage)
+
+### IDE
+
+Open the `VMF-Tutorial-01` [Gradle](http://www.gradle.org/) project in your favourite IDE (tested with NetBeans 8.2 and IntelliJ 2018) and run it
+by calling the `run` task.
+
+### Command Line
+
+Navigate to the [Gradle](http://www.gradle.org/) project (i.e., `path/to/VMF-Tutorial-01`) and enter the following command
+
+#### Bash (Linux/macOS/Cygwin/other Unix shell)
+
+    bash gradlew run
+    
+#### Windows (CMD)
+
+    gradlew run
+
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-02/README.md)
 
 
