@@ -100,7 +100,9 @@ If we check the output from the change listener we can clearly see that `parent.
 System.out.println("my new parent: " + child1.getParent().getName());
 ```
 
-Congrats, you have successfully declared your first containment reference.  If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03).
+Congrats, you have successfully declared your first containment reference.  
+
+If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-04/README.md)
 
