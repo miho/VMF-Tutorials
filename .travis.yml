@@ -1,4 +1,7 @@
-udo: false
+sudo: false
+
+env:
+  - TERM=dumb
 
 matrix:
     include:
