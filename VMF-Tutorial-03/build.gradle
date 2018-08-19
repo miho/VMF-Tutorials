@@ -1,10 +1,10 @@
 plugins {
-    id "eu.mihosoft.vmf" version "0.1.6"
+    id "eu.mihosoft.vmf" version "0.1.10"
 }
 
 // configure vmf
 vmf {
-    version = '0.1.1'
+    version = '0.1.10'
 }
 
 sourceCompatibility = '1.8'
