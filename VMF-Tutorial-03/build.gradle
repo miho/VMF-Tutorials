@@ -1,5 +1,5 @@
 plugins {
-    id "eu.mihosoft.vmf" version "0.1.6"
+    id "eu.mihosoft.vmf" version "0.2-SNAPSHOT"
 }
 
 // configure vmf
@@ -15,7 +15,7 @@ if (!hasProperty('mainClass')) {
 }
 
 wrapper {
-    gradleVersion = '4.9'
+    gradleVersion = '5.1'
 }
 
 task run(type: JavaExec) {
