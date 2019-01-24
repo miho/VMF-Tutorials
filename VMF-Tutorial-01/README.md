@@ -18,18 +18,11 @@ Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have
 
 ```gradle
 plugins {
-  id "eu.mihosoft.vmf" version "0.1.3" // use latest version
-}
-```
-Now we can configure VMF and specify which version shall be used:
-
-```gradle
-vmf {
-    version = '0.1.1' // use desired VMF version
+  id "eu.mihosoft.vmf" version "0.2" // use desired plugin version
 }
 ```
 
-The plugin adds a source set `src/vmf/java` to our Gradle project intended for the model definition. 
+The plugin adds a source set directory ( e.g., `src/main/vmf`) to our Gradle project intended for the model definition. 
 In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
 
 ```java
@@ -44,10 +37,11 @@ The source directories of our tutorial project looks like this:
 
 ```
 src
-├── main/java ...
-│         └── ...
-│   
-└── vmf/java
+├── main/java
+│         ├── eu.mihosoft.vmf.tutorial01/Main.java
+│         └── ...  
+│
+└── main/vmf
           ├── /eu/mihosoft/vmf/tutorial01/vmfmodel/Parent.java
           └── ...
 ```
