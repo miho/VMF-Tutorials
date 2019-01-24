@@ -3,7 +3,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/w3ncymxslgm8thtf?svg=true)](https://ci.appveyor.com/project/miho/vmf-tutorials)
 [![Join the chat at https://gitter.im/VMF_/Lobby](https://badges.gitter.im/VMF_/Lobby.svg)](https://gitter.im/VMF_/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This collection of tutorials gives an introduction to VMF and its use in regular Java projects.
+This collection of tutorials gives an introduction to [VMF](https://github.com/miho/VMF) and its use in regular Java projects.
 
 ## Contents
 
@@ -16,7 +16,7 @@ This collection of tutorials gives an introduction to VMF and its use in regular
 
 ## Introduction
 
-VMF is a lightweight modeling framework for the Java platform. It generates/supports:
+[VMF](https://github.com/miho/VMF) is a lightweight modeling framework for the Java platform. It generates/supports:
 
 - getters and setters
 - default values
@@ -32,9 +32,9 @@ VMF is a lightweight modeling framework for the Java platform. It generates/supp
 - annotations
 - ...
 
-A VMF model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model VMF generated a lot of useful API:
+A [VMF](https://github.com/miho/VMF) model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model [VMF](https://github.com/miho/VMF) generated a lot of useful API:
 
 <img src="resources/img/vmf-01.svg">
 
-VMF integrates well into manual Java implementations. It comes with a Gradle plugin which means that using VMF is very simple. The tutorials will walk you through all major aspects of VMF.
+VMF integrates well into manual Java implementations. It comes with a Gradle plugin which means that using VMF is very simple. The tutorials will walk you through all major aspects of [VMF](https://github.com/miho/VMF).
 
