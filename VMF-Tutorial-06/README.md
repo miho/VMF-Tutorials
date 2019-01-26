@@ -64,6 +64,27 @@ root.vmf().content().stream(Node.class).forEach(
 );
 ```
 
+Usually, the expected output would be:
+
+```
+// -> node: root
+// -> node: child 1
+// -> node: child 2
+// -> node: child 3
+```
+
+But with the custom property order, we get the following result:
+
+```
+// -> node: root
+// -> node: child 3
+// -> node: child 2
+// -> node: child 1
+```
+
+Note, that only model-type properties are visited. That is why the `name` and `visible` properties are omitted. The same applies to collection properties. If the element type is a model-type, all elements are visited. The collection is omitted otherwise.
+
+
 Congrats, you have successfully declared your first model with custom property order.  
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
