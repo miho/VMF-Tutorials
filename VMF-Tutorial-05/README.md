@@ -13,7 +13,7 @@ In this tutorial you will learn how to
 
 ### Instantiating Objects
 
-for this tutorial we are going to use the following model:
+For this tutorial we are going to use the following model:
 
 ```java
 package eu.mihosoft.vmf.tutorial05.vmfmodel;
