@@ -92,7 +92,7 @@ We can easily declare nodes as invisible and use `filter()` to skip them during 
 // -> child 2 should be invisible
 child2.setVisible(false);
 
-// we use the simple predicate `n->n.isVisible()` to filter invisible instances
+// we use the simple predicate `filter(Node::isVisible)` to filter invisible instances
 root.vmf().content().stream(Node.class).filter(Node::isVisible).forEach(
     (node)-> System.out.println("-> node: " + node.getName())
 );
