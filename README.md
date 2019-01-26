@@ -13,7 +13,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Containment References](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03/README.md)
 - [Undo/Redo API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-04/README.md)
 - [Using the Builder API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05/README.md)
-- [Object Graph Traversal & Custom Property Orders](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
+- [Object Graph Traversal & Custom Property Order](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
 
 
 ## Introduction
