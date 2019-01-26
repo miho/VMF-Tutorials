@@ -2,7 +2,7 @@
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-07/README.md)
 
-## Object Graph Traversal & Custom Property Orders
+## Object Graph Traversal & Custom Property Order
 
 ### What you will learn
 
