@@ -93,7 +93,6 @@ We can easily declare nodes as invisible and use `filter()` to skip them during 
 child2.setVisible(false);
 
 // we use the simple predicate `n->n.getVisible()` to filter invisible instances
-System.out.println("\nObject Graph without 'child 2': ");
 root.vmf().content().stream(Node.class).filter(n->n.getVisible()).forEach(
     (node)-> System.out.println("-> node: " + node.getName())
 );
