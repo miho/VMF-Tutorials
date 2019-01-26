@@ -11,103 +11,65 @@ In this tutorial you will learn how to
 - traverse object graphs via streams
 - declare a property order that defines the order in which properties appear in the stream
 
-### Setting up a Gradle Project
+### Declaring the Property Order
 
-Since VMF comes with a convenient Gradle plugin it's easy to setup. We just have to add the VMF plugin id, e.g. via
-
-```gradle
-plugins {
-  id "eu.mihosoft.vmf" version "0.2" // use desired plugin version
-}
-```
-
-The plugin adds a source set directory ( e.g., `src/main/vmf`) to our Gradle project intended for the model definition. 
-In our first example we want to generate code for a very basic model. It just consists of one interface `Parent` with a single String property `name`. Here's how we can define the model as Java interface:
+The model we are going to use consists of a `Node` entity with five properties. With the `@PropertyOrder(index = 0)` annotation we can define the index of each property, i.e., the order in which properties are processed. Here's the code of the full model:
 
 ```java
-package eu.mihosoft.vmf.tutorial01.vmfmodel;
+package eu.mihosoft.vmf.tutorial06.vmfmodel;
 
-interface Parent {
+import eu.mihosoft.vmf.core.*;
+
+interface Node {
+
+    @PropertyOrder(index = 0)
     String getName();
+
+    @PropertyOrder(index = 1)
+    Boolean getVisible();
+
+    @PropertyOrder(index = 4)
+    Node getChild1();
+    @PropertyOrder(index = 3)
+    Node getChild2();
+    @PropertyOrder(index = 2)
+    Node getChild3();
 }
 ```
 
-### Running the Code Generator
+### Setting up the Object Graph
 
-After we created our first model definition we are ready to run the code generator via the `vmfGenModelSource`task, e.g. via
-
-```
-./gradlew vmfGenModelSources
-```
-
-VMF should show the following output:
-
-```
-> Task :vmfGenModelSources
- -> generating code for vmf model in package: eu/mihosoft/vmf/tutorial01/vmfmodel
-```
-
-### Using the Code
-
-To use the code just use the generated code from your regular Java code, e.g, in `src/main/java`:
+To set up the object graph, we create a root node and three children which we asssign after creating all four instances:
 
 ```java
-package eu.mihosoft.vmf.tutorial01;
+// create a new Node instance (this is our root)
+        Node root = Node.newBuilder().withName("root").withVisible(true).build();
 
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        // create a new parent instance
-        Parent parent = Parent.newInstance();
+        // create two children
+        Node child1 = Node.newBuilder().withName("child 1").withVisible(true).build();
+        Node child2 = Node.newBuilder().withName("child 2").withVisible(true).build();
+        Node child3 = Node.newBuilder().withName("child 3").withVisible(true).build();
         
-        // set parent's name
-        parent.setName("My Name");
-        
-        // check that name is set
-        if("My Name".equals(parent.getName())) {
-          System.out.println("name is correctly set");
-        } else {
-          System.out.println("something went wrong :(");
-        }
-        
-    }
-}
+        // and add them to the root node
+        root.setChild1(child1);
+        root.setChild2(child2);
+        root.setChild3(child3);
 ```
 
-Congrats, you have successfully created your first VMF model. If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-01).
+Now we can traverse the object graph. As with all VMF related functionality, we do this by using the `vmf()` API. More specifically, we obtain a stream via `root.vmf().content().stream(Node.class)` which is equivalent to `stream().filter(e->type.isAssignableFrom(e.getClass())).map(e->(T)e)`. Printing the traversed node names can be done via
 
-## Running the Tutorial
+```java
+        root.vmf().content().stream(Node.class).forEach(
+            (node)-> System.out.println("-> node: " + node.getName())
+        );
+```
 
-To run this code, just call the `run` task of your gradle project:
+Congrats, you have successfully declared your first model with custom property order.  
 
-### Requirements
+If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
-- Java >= 1.8
-- Internet connection (dependencies are downloaded automatically)
-- IDE: [Gradle](http://www.gradle.org/) Plugin (not necessary for command line usage)
 
-### IDE
-
-Open the `VMF-Tutorial-01` [Gradle](http://www.gradle.org/) project in your favourite IDE (tested with NetBeans 8.2 and IntelliJ 2018) and run it
-by calling the `run` task.
-
-### Command Line
-
-Navigate to the [Gradle](http://www.gradle.org/) project (i.e., `path/to/VMF-Tutorial-01`) and enter the following command
-
-#### Bash (Linux/macOS/Cygwin/other Unix shell)
-
-    bash gradlew run
-    
-#### Windows (CMD)
-
-    gradlew run
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-02/README.md)
+[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-07/README.md)
 
 
 
