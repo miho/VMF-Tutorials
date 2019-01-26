@@ -8,7 +8,7 @@ interface Node {
     String getName();
 
     @PropertyOrder(index = 1)
-    Boolean getVisible();
+    boolean isVisible();
 
     @PropertyOrder(index = 4)
     Node getChild1();

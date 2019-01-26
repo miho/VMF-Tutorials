@@ -60,9 +60,9 @@ public class Main {
         // -> child 2 should be invisible
         child2.setVisible(false);
 
-        // we use the simple predicate `n->n.getVisible()` to filter invisible instances
+        // we use the simple predicate `n->n.isVisible()` to filter invisible instances
         System.out.println("\nObject Graph without 'child 2': ");
-        root.vmf().content().stream(Node.class).filter(n->n.getVisible()).forEach(
+        root.vmf().content().stream(Node.class).filter(Node::isVisible).forEach(
             (node)-> System.out.println("-> node: " + node.getName())
         );
 
