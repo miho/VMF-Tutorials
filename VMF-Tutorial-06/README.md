@@ -43,25 +43,25 @@ To set up the object graph, we create a root node and three children which we as
 
 ```java
 // create a new Node instance (this is our root)
-        Node root = Node.newBuilder().withName("root").withVisible(true).build();
+Node root = Node.newBuilder().withName("root").withVisible(true).build();
 
-        // create two children
-        Node child1 = Node.newBuilder().withName("child 1").withVisible(true).build();
-        Node child2 = Node.newBuilder().withName("child 2").withVisible(true).build();
-        Node child3 = Node.newBuilder().withName("child 3").withVisible(true).build();
+// create two children
+Node child1 = Node.newBuilder().withName("child 1").withVisible(true).build();
+Node child2 = Node.newBuilder().withName("child 2").withVisible(true).build();
+Node child3 = Node.newBuilder().withName("child 3").withVisible(true).build();
         
-        // and add them to the root node
-        root.setChild1(child1);
-        root.setChild2(child2);
-        root.setChild3(child3);
+// and add them to the root node
+root.setChild1(child1);
+root.setChild2(child2);
+root.setChild3(child3);
 ```
 
 Now we can traverse the object graph. As with all VMF related functionality, we do this by using the `vmf()` API. More specifically, we obtain a stream via `root.vmf().content().stream(Node.class)` which is equivalent to `stream().filter(e->type.isAssignableFrom(e.getClass())).map(e->(T)e)`. Printing the traversed node names can be done via
 
 ```java
-        root.vmf().content().stream(Node.class).forEach(
-            (node)-> System.out.println("-> node: " + node.getName())
-        );
+root.vmf().content().stream(Node.class).forEach(
+    (node)-> System.out.println("-> node: " + node.getName())
+);
 ```
 
 Congrats, you have successfully declared your first model with custom property order.  
