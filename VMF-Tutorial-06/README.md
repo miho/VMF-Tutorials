@@ -1,8 +1,8 @@
-# VMF Tutorial 1
+# VMF Tutorial 6
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-07/README.md)
 
-## Defining your First Model
+## Object Graph Traversal & Custom Property Orders
 
 ### What you will learn
 
