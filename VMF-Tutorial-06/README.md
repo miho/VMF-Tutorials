@@ -84,8 +84,31 @@ But with the custom property order, we get the following result:
 
 Note, that only model-type properties are visited. That is why the `name` and `visible` properties are omitted. The same applies to collection properties. If the element type is a model-type, all elements are visited. The collection is omitted otherwise.
 
+### Filter Nodes
 
-Congrats, you have successfully declared your first model with custom property order.  
+We can easily declare nodes as invisible and use `filter()` to skip them during the object graph traversal:
+
+```java
+// -> child 2 should be invisible
+child2.setVisible(false);
+
+// we use the simple predicate `n->n.getVisible()` to filter invisible instances
+System.out.println("\nObject Graph without 'child 2': ");
+root.vmf().content().stream(Node.class).filter(n->n.getVisible()).forEach(
+    (node)-> System.out.println("-> node: " + node.getName())
+);
+```
+
+This should give us the following output:
+
+```
+// we should see the following output:
+// -> node: root
+// -> node: child 3
+// -> node: child 1
+```
+
+Congrats, you have successfully declared a custom property order and used streams to traverse object graphs.  
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
