@@ -82,7 +82,7 @@ But with the custom property order, we get the following result:
 // -> node: child 1
 ```
 
-Note, that only model-type properties are visited. That is why the `name` and `visible` properties are omitted. The same applies to collection properties. If the element type is a model-type, all elements are visited. The collection is omitted otherwise.
+Note, that only model-type properties are visited. That is why the `name` and `visible` properties are omitted. The same applies to collection properties. If the element type is a model-type, all elements are visited. The collection is omitted otherwise. The method `node.vmf().reflect().properties()` gives access to the complete list of properties of a node object. 
 
 ### Filter Nodes
 
