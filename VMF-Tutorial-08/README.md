@@ -95,7 +95,9 @@ interface ObjectWithCustomBehavior {
 
 Then the delegation class just needs one additional method that is called during instantiation: `onObjectWithCustomBehaviorInstantiated()`. The naming scheme is `on${ClassName}Instantiated()` where `${ClassName}` is the name of the model entity to be extended with custom behavior. Adding behavior during instantiation is convenient and allows to automatically register listeners to objects etc.
 
-Congrats, you have successfully declared an immutable model entity and used the read-only API of mutable objects. 
+## Conclusion
+
+Congrats, you have successfully implemented custom behavior. 
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
