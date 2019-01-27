@@ -46,3 +46,4 @@ script:
     - cd $CWD/VMF-Tutorial-05 && ./gradlew run --stacktrace
     - cd $CWD/VMF-Tutorial-06 && ./gradlew run --stacktrace
     - cd $CWD/VMF-Tutorial-07 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-08 && ./gradlew run --stacktrace
