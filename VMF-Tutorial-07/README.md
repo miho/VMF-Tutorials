@@ -78,6 +78,8 @@ It is still possible to register listeners and react to changes since it is just
 MutableObject mutableObject2 = readOnlyMutable.asModifiable();
 ```
 
+## Conclusion
+
 Congrats, you have successfully declared an immutable model entity and used the read-only API of mutable objects. 
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
