@@ -17,6 +17,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Immutable Objects & ReadOnly API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07/README.md)
 - [Custom Behavior & Delegation](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-08/README.md)
 - [Custom Default Values for Properties](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-09/README.md)
+- [Equals & HashCode](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-10/README.md)
 
 
 ## Introduction
