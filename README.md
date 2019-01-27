@@ -34,6 +34,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - immutable types and read-only wrappers
 - delegation
 - annotations
+- reflection
 - ...
 
 A [VMF](https://github.com/miho/VMF) model consists of annotated Java interfaces. We could call this "wannabe" code. We just specify the interface and its properties and get a rich implementation that implements the property setters and getters, builders and much more. Even for a simple model [VMF](https://github.com/miho/VMF) generated a lot of useful API:
