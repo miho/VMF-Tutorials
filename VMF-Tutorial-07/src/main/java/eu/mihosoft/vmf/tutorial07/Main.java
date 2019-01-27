@@ -25,7 +25,7 @@ public class Main {
         ReadOnlyMutableObject readOnlyMutable = mutableObject.asReadOnly();
 
         // this won't compile
-        readOnlyMutable.setValue();
+        // readOnlyMutable.setValue();
 
         // creates a modifiable copy (deep copy)
         MutableObject mutableObject2 = readOnlyMutable.asModifiable();
