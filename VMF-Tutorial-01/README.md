@@ -119,7 +119,7 @@ Navigate to the [Gradle](http://www.gradle.org/) project (i.e., `path/to/VMF-Tut
 
     gradlew run
 
-### Conclusion
+## Conclusion
 
 Congrats, you have successfully created your first VMF model. If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-01).    
 
