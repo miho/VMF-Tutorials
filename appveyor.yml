@@ -49,3 +49,9 @@ build_script:
   - cd VMF-Tutorial-05
   - gradlew.bat clean run --stacktrace
   - cd %APPVEYOR_BUILD_FOLDER%
+  - cd VMF-Tutorial-06
+  - gradlew.bat clean run --stacktrace
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - cd VMF-Tutorial-07
+  - gradlew.bat clean run --stacktrace
+  - cd %APPVEYOR_BUILD_FOLDER%
