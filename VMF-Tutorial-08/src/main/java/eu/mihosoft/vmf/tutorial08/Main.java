@@ -10,7 +10,7 @@ public class Main {
         // first, we create an object
         ObjectWithCustomBehavior obj = ObjectWithCustomBehavior.newInstance();
 
-        // them we set properties a and b
+        // then we set properties a and b
         obj.setA(2);
         obj.setB(3);
 
