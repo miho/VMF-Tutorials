@@ -43,3 +43,5 @@ A [VMF](https://github.com/miho/VMF) model consists of annotated Java interfaces
 
 VMF integrates well into manual Java implementations. It comes with a Gradle plugin which means that using VMF is very simple. The tutorials will walk you through all major aspects of [VMF](https://github.com/miho/VMF).
 
+Continue with the [FIRST TUTORIAL](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md).
+
