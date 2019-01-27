@@ -18,4 +18,8 @@ public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavio
     public int computeSum() {
         return caller.getA() + caller.getB();
     }
+
+    public void onObjectWithCustomBehaviorInstantiated() {
+        System.out.println("object instantiated");
+    }
 }
