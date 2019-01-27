@@ -15,7 +15,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Using the Builder API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05/README.md)
 - [Object Graph Traversal and Custom Property Order](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
 - [Immutable Objects & ReadOnly API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07/README.md)
-- [Custom Behavior & Delegation](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-08/README.md)
+- [Custom Default Values for Properties](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-08/README.md)
 
 
 ## Introduction
