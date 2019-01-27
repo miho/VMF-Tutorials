@@ -50,10 +50,14 @@ We can check whether the properties are set or unset:
 
 ```java
 // we use `p.isSet()` to check if the property is set
-String valueIsSet = obj.vmf().reflect().propertyByName("value").map(p->""+p.isSet()).orElse("<not available>");
-String nameIsSet = obj.vmf().reflect().propertyByName("name").map(p->""+p.isSet()).orElse("<not available>");
-System.out.println("Value is set:  " + valueIsSet );
-System.out.println("Name is set:   " + nameIsSet );
+Function<String,String> propertySetOrUnset = (propName) -> {
+    return obj.vmf().reflect().propertyByName(propName).
+        map(p->""+p.isSet()).orElse("<not available>");
+};
+
+// we expect both properties to be unset (`false`)
+System.out.println("Value is set:  " + propertySetOrUnset.apply("value") );
+System.out.println("Name is set:   " + propertySetOrUnset.apply("name")  );
 ```
 
 We expect the properties to be unset (`false`). If we change the name property, it should be set:
