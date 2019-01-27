@@ -1,0 +1,38 @@
+// enable intellij integration
+buildscript {
+    ext.vmfPluginIntelliJIntegration = true
+}
+
+// load plugins
+plugins {
+    id "eu.mihosoft.vmf" version "0.2.0.1"
+}
+
+// gradle wrapper
+wrapper {
+    gradleVersion = '5.1'
+}
+
+// set dependencies for intellij editor (otherwise vmf dir would be ignored)
+idea { 
+    module {
+        dependencies {
+           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.2.0.1"
+        }
+    }
+}
+
+// configure java build
+sourceCompatibility = '1.8'
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+// set default main class
+if (!hasProperty('mainClass')) {
+    ext.mainClass = 'eu.mihosoft.vmf.tutorial07.Main'
+}
+
+// run the main class
+task run(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    main = mainClass
+}
