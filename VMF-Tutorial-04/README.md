@@ -134,6 +134,8 @@ System.out.println(" -> root:          " + root);
 System.out.println(" -> rootClone:     " + rootClone);
 ```
 
+## Conclusion
+
 Congrats, you have successfully used the VMF undo/redo API. 
 
 As always, if you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-04). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
