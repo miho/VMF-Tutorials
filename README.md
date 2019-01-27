@@ -13,8 +13,9 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Containment References](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03/README.md)
 - [Undo/Redo API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-04/README.md)
 - [Using the Builder API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05/README.md)
-- [Object Graph Traversal & Custom Property Order](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
-- [Immutable Objects and ReadOnly API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07/README.md)
+- [Object Graph Traversal and Custom Property Order](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
+- [Immutable Objects & ReadOnly API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-07/README.md)
+- [Custom Behavior & Delegation](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-08/README.md)
 
 
 ## Introduction
