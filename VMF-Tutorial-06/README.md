@@ -107,6 +107,8 @@ This should give us the following output:
 // -> node: child 1
 ```
 
+## Conclusion
+
 Congrats, you have successfully declared a custom property order and used streams to traverse object graphs.  
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
