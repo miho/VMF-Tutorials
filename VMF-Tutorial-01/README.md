@@ -92,8 +92,6 @@ public class Main {
 }
 ```
 
-Congrats, you have successfully created your first VMF model. If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-01).
-
 ## Running the Tutorial
 
 To run this code, just call the `run` task of your gradle project:
@@ -120,6 +118,10 @@ Navigate to the [Gradle](http://www.gradle.org/) project (i.e., `path/to/VMF-Tut
 #### Windows (CMD)
 
     gradlew run
+
+### Conclusion
+
+Congrats, you have successfully created your first VMF model. If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-01).    
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-02/README.md)
 
