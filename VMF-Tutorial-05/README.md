@@ -54,6 +54,8 @@ WithName.newBuilder().applyFrom(node1).applyTo(node2);
 System.out.println("> node1.name == node2.name: " + node1.getName().equals(node2.getName()));
 ```
 
+## Conclusion
+
 Congrats, you have successfully used the Builder API to instantiate your domain objects.
 
 As always, if you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
