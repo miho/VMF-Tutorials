@@ -95,6 +95,30 @@ interface ObjectWithCustomBehavior {
 
 Then the delegation class just needs one additional method that is called during instantiation: `onObjectWithCustomBehaviorInstantiated()`. The naming scheme is `on${ClassName}Instantiated()` where `${ClassName}` is the name of the model entity to be extended with custom behavior. Adding behavior during instantiation is convenient and allows to automatically register listeners to objects etc.
 
+The delegation code is shown below:
+
+```java
+package eu.mihosoft.vmf.tutorial08;
+
+import eu.mihosoft.vmf.runtime.core.DelegatedBehavior;
+
+public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavior> {
+    private ObjectWithCustomBehavior caller;
+
+    @Override
+    public void setCaller(ObjectWithCustomBehavior caller) {
+        this.caller = caller;
+    }
+    
+    /**
+     * Called if a new instance of {@code ObjectWithCustomBehavior} is created.
+     */
+    public void onObjectWithCustomBehaviorInstantiated() {
+        System.out.println("object instantiated");
+    }
+}
+```
+
 ## Conclusion
 
 Congrats, you have successfully implemented custom behavior. 
