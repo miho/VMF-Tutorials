@@ -2,13 +2,14 @@
 
 [HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-10/README.md)
 
-## Custom Behavior & Delegation
+## Custom Default Values for Properties
 
 ### What you will learn
 
 In this tutorial you will learn how to
 
-- declare default values
+- define default values
+- check if properties are set or unset
 
 ### Declaring Default Values
 
