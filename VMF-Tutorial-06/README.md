@@ -107,6 +107,32 @@ This should give us the following output:
 // -> node: child 1
 ```
 
+## Iteration Strategies
+
+There are three different iteration strategies for iterating over an object graph:
+
+- the **UNIQUE_NODE** strategy visits every object instance exactly once. If an instance is referenced multiple times
+  in the object graph it is still only visted once
+- the **UNIQUE_PROPERTY** strategy visits every property exactly once, no matter if multiple properties hold a reference to   the same object instance
+- the **CONTAINMENT_TREE** strategy visits only the containment graph and ignores everything else
+
+All three strategies prevent cyclic paths. Here are some examples on how to select a specific interation strategy:
+
+#### Stream API
+
+```java
+myGraph.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(object->{
+  System.out.println(object);
+});
+```
+
+#### Iterator API
+
+```java
+VIterator it = myGraph.vmf().content().iterator(VIterator.IterationStrategy.CONTAINMENT_TREE);
+```
+
+
 ## Conclusion
 
 Congrats, you have successfully declared a custom property order and used streams to traverse object graphs.  
