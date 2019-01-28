@@ -78,6 +78,11 @@ It is still possible to register listeners and react to changes since it is just
 MutableObject mutableObject2 = readOnlyMutable.asModifiable();
 ```
 
+## Interesting to Know
+
+- calling `asReadOnly()` is a no-op, immutables do not have ReadOnly-Sibling
+- `clone()` is a no-op, cloning uses shared immutable references
+
 ## Conclusion
 
 Congrats, you have successfully declared an immutable model entity and used the read-only API of mutable objects. 
