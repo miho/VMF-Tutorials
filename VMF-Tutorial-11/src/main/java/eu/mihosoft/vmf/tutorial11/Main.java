@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         
         // create nodes
-        Node n = Node.newBuilder().withId("node:0").build();
+        Node n = Node.newBuilder().withId("node:n").build();
         Node a = Node.newBuilder().withId("node:a").build();
         Node b = Node.newBuilder().withId("node:b").build();
         Node c = Node.newBuilder().withId("node:c").build();
