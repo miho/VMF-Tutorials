@@ -71,7 +71,7 @@ ReadOnlyMutableObject readOnlyMutable = mutableObject.asReadOnly();
 readOnlyMutable.setValue()
 ```
 
-It is still possible to register listeners and react to changes since it is just a read-only view of a mutable object. This only guaranties that the consumer of a read-only instance cannot make any changes. But it can still see them. The consumer of a read-only instance can also create mutable instances from read-only objects. But to ensure that we don't violate the read-only contract with the original object, VMF forces the consumer to create a deep clone which is then modifiable:
+It is still possible to register listeners and react to changes since it is just a read-only view of a mutable object. This only guarantees that the consumer of a read-only instance cannot make any changes. But it can still see them. The consumer of a read-only instance can also create mutable instances from read-only objects. But to ensure that we don't violate the read-only contract with the original object, VMF forces the consumer to create a deep clone which is then modifiable:
 
 ```java
 // creates a modifiable copy (deep copy)
