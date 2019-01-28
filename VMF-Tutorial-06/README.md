@@ -132,7 +132,6 @@ myGraph.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(
 VIterator it = myGraph.vmf().content().iterator(VIterator.IterationStrategy.CONTAINMENT_TREE);
 ```
 
-
 ## Conclusion
 
 Congrats, you have successfully declared a custom property order and used streams to traverse object graphs.  
