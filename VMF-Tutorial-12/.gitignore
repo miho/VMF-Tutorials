@@ -1,0 +1,9 @@
+/.gradle/
+/.nb-gradle/
+/.idea/
+/build/
+
+.dropbox.attr
+VMF-Tutorial-11.iml
+
+out/
