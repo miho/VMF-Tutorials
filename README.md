@@ -19,6 +19,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Custom Default Values for Properties](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-09/README.md)
 - [Equals & HashCode](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-10/README.md)
 - [Annotations](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-11/README.md)
+- [Cloning (Deep Copy & Shallow Copy)](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-12/README.md)
 
 
 ## Introduction
