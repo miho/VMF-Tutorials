@@ -50,3 +50,4 @@ script:
     - cd $CWD/VMF-Tutorial-09 && ./gradlew run --stacktrace
     - cd $CWD/VMF-Tutorial-10 && ./gradlew run --stacktrace
     - cd $CWD/VMF-Tutorial-11 && ./gradlew run --stacktrace
+    - cd $CWD/VMF-Tutorial-12 && ./gradlew run --stacktrace
