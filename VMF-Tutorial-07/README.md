@@ -100,7 +100,14 @@ interface ImmutableObj extends WithName { }
 interface MutableObj extends WithName { }
 ```
 
+We can safely use `WithName` as a common super type of mutable and immutable types:
 
+```java
+ImmutableObj immutableObj = ImmutableObj.newBuilder().withName("immutable obj").build();
+MutableObj   mutableObj   = MutableObj.newBuilder().withName("mutable obj").build();
+WithName withName1 = immutableObj;
+WithName withName2 = mutableObj;
+```
 
 ## Interesting to Know
 
