@@ -77,6 +77,30 @@ It is still possible to register listeners and react to changes since it is just
 // creates a modifiable copy (deep copy)
 MutableObject mutableObject2 = readOnlyMutable.asModifiable();
 ```
+## How can Mutable and Immutable Types Share a Common Super Type?
+
+From the frameworks point of view it is important to protect the immutability-contract. This makes it impossible to allow free inheritance between mutable and immutable types. Otherwise, a subtype of an immutable could be mutable and we could not be sure whether a `ImmutableObject` instance is really immutable. This uncertainty would essentially degrade immutability to a read-only type. That is, VMF cannot allow that. 
+
+However, there are cases in which it is desirable to declare a common super type for immutable and mutable model entities. For this purpose, VMF provides a way to declare effectively immutable types that provide an interface only. If such a lightweight interface only provides getter methods and if all involved types are immutable or also interface-only with getters only, we can assume it's immutable as well. Although, we cannot use such a type as property, we can safely inherit from it, whether we are mutable or not.
+
+InterfaceOnly, GetterOnly & Immutability:
+
+```jave
+package mypkg.vmfmodel;
+import eu.mihosoft.vmf.core.*;
+
+@InterfaceOnly
+interface WithName {
+
+    @GetterOnly
+    String getName();
+}
+
+interface ImmutableObj extends WithName { }
+interface MutableObj extends WithName { }
+```
+
+
 
 ## Interesting to Know
 
