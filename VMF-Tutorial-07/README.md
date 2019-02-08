@@ -80,8 +80,8 @@ MutableObject mutableObject2 = readOnlyMutable.asModifiable();
 
 ## Interesting to Know
 
-- calling `asReadOnly()` is a no-op, immutables do not have ReadOnly-Sibling
-- `clone()` is a no-op, cloning uses shared immutable references
+- calling `asReadOnly()` is a no-op, immutables do not have ReadOnly-Siblings
+- `clone()` is a no-op, cloning uses shared immutable references (in case of read-only objects, a shallow read-only copy is used which references the same mutable object)
 
 ## Conclusion
 
