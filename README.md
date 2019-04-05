@@ -11,6 +11,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Defining your first model](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md)
 - [Using the Change Notification API](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-02/README.md)
 - [Containment References](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03/README.md)
+- [Cross References](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03b/README.md)
 - [Undo/Redo API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-04/README.md)
 - [Using the Builder API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05/README.md)
 - [Object Graph Traversal and Custom Property Order](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06/README.md)
