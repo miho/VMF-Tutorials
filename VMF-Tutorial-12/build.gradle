@@ -5,7 +5,7 @@ buildscript {
 
 // load plugins
 plugins {
-    id "eu.mihosoft.vmf" version "0.2.4"
+    id "eu.mihosoft.vmf" version "0.3-SNAPSHOT"
 }
 
 // gradle wrapper
@@ -17,7 +17,7 @@ wrapper {
 idea { 
     module {
         dependencies {
-           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.2.4"
+           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.3-SNAPSHOT"
         }
     }
 }
