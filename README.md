@@ -22,6 +22,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Annotations](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-11/README.md)
 - [Cloning (Deep Copy & Shallow Copy)](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-12/README.md)
 - [The Reflection API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-13/README.md)
+- [Custom Model Documentation](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-14/README.md)
 
 
 ## Introduction
@@ -31,6 +32,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - getters and setters
 - default values
 - containment
+- cross refrences
 - builder API
 - equals() and hashCode()
 - deep and shallow cloning
