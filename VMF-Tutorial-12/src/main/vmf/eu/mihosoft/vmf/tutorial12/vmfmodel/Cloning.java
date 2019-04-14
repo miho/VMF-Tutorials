@@ -6,7 +6,6 @@ interface Store {
 
     String getId();
 
-    @Contains(opposite="parent")
     Item[] getItems();
 
     @DelegateTo(className="eu.mihosoft.vmf.tutorial12.StoreDelegate")
@@ -17,9 +16,6 @@ interface Store {
 interface Item {
 
     String getId();
-
-    @Container(opposite="items")
-    Store getParent();
 
     @DelegateTo(className="eu.mihosoft.vmf.tutorial12.ItemDelegate")
     String toString();
