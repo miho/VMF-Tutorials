@@ -60,7 +60,7 @@ store.getItems().add(item2);
 System.out.println(store.toString());
 ```
 
-Now, we will create a deep copy and a shallow copy and chbange their ids. We compare both with the original and conclude that both should be different from the original, i.e., the original should stay untouched:
+Now, we will create a deep copy and a shallow copy and change their ids. We compare both with the original and conclude that both should be different from the original, i.e., the original should stay untouched:
 
 ```java
 // now we create a deep copy
