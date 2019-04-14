@@ -127,7 +127,7 @@ This change has also been applied to the original store. It shows the same item 
 
 ## Conclusion
 
-Congrats, you have successfully cloned object graphs and learned how shallow copies are different from shallow copies.
+Congrats, you have successfully cloned object graphs and learned how deep copies are different from shallow copies.
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-12). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
