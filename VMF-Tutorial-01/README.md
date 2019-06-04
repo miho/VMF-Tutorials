@@ -38,7 +38,7 @@ The source directories of our tutorial project looks like this:
 ```
 src
 ├── main/java
-│         ├── eu.mihosoft.vmf.tutorial01/Main.java
+│         ├── /eu/mihosoft/vmf/tutorial01/Main.java
 │         └── ...  
 │
 └── main/vmf
