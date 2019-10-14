@@ -70,7 +70,7 @@ public class Main {
         System.out.println("#### Shallow Copy ####");
         System.out.println(shallowCopy);
 
-        if(!shallowCopy.equals(store)) {
+        if(!shallowCopy.vmf().content().equals(store)) {
             throw new RuntimeException("shallow copy should be equal to original store");
         }
 
