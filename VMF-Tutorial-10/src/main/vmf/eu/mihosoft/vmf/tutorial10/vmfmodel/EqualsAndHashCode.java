@@ -2,6 +2,7 @@ package eu.mihosoft.vmf.tutorial10.vmfmodel;
 
 import eu.mihosoft.vmf.core.*;
 
+@VMFEquals()
 interface ObjectToCompare {
 
     String getId();
@@ -9,6 +10,7 @@ interface ObjectToCompare {
 
 }
 
+@VMFEquals()
 interface ObjectToCompareId {
 
     String getId();

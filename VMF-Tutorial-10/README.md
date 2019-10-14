@@ -20,6 +20,7 @@ package eu.mihosoft.vmf.tutorial10.vmfmodel;
 
 import eu.mihosoft.vmf.core.*;
 
+@VMFEquals
 interface ObjectToCompare {
 
     String getId();
@@ -27,6 +28,8 @@ interface ObjectToCompare {
 
 }
 ```
+
+To tell VMF to provide the `ObjectToCompare` class with its implementation of `equals(other)` and `hasCode()`, we annotate it with `@VMFEquals()`.
 
 Now let's compare three instances of `ObjectToCompare`:
 
@@ -45,9 +48,10 @@ VMF provides a fully functional implementation of the `equals()` method. That is
 
 ### Ignoring Properties for Equals
 
-To demonstrate the effect of `@IgnoreEquals` we define another entity `ObjectToCompareId` that ignores the `data` property in the `equals()` method provided by VMF.
+To demonstrate the effect of `@IgnoreEquals` we define another entity `ObjectToCompareId` that ignores the `data` property in the `equals()` method provided by VMF. Just like before, we annotate `ObjectToCompareId` with `@VMFEquals()`.
 
 ```java
+@VMFEquals()
 interface ObjectToCompareId {
 
     String getId();
@@ -78,9 +82,15 @@ In this case the objects are all equal to each other because only the `id` prope
 HashCode is based on the `equals()` method. That means that `@IgnoreEquals` also has an effect on the implementation of the `hashCode()` method. Although it is possible to override `hashCode()` and `equals()` it is not recommended because breaking the contracts causes serious problems with collections etc.
 
 
+## Interesting to Know
+
+If the `@VMFEquals()` annotation is not specified then the default `Object.equals(Object o)` and
+`Object.hashCode()` implementations are used for an objects equals and hasCode method. The VMF
+specific implementation is always accessible via `vObj.vmf().content().equals(Object o)` and `vObj.vmf().content().hashCode()` for a model object `vObj`.
+
 ## Conclusion
 
-Congrats, you have successfully defined custom default values for properties. 
+Congrats, you have successfully used VMFs `equals()`and `hashCode()` implementations. 
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-10). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
