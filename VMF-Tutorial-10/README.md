@@ -88,6 +88,31 @@ If the `@VMFEquals()` annotation is not specified then the default `Object.equal
 `Object.hashCode()` implementations are used for an objects equals and hasCode method. The VMF
 specific implementation is always accessible via `vObj.vmf().content().equals(Object o)` and `vObj.vmf().content().hashCode()` for a model object `vObj`.
 
+The preferred equals implementation can be specified globally via the `@VMFModel` annotation. Example:
+
+```java
+import static eu.mihosoft.vmf.core.VMFEquals.EqualsType.*;
+
+@VMFModel(
+    equality = CONTAINMENT_AND_EXTERNAL
+)
+
+interface Type1 {
+  // ...
+}
+
+interface Type2 {
+  // ...
+}
+```
+
+Both types use the VMF `equals()` and `hashCode()` implementations now. Currently, VMF provides three equals
+implementations:
+
+- **INSTANCE:** objects are compared via `==`
+- **CONTAINMENT_AND_EXTERNAL:** contained as well as externals are considered
+- **ALL:** all properties are considered
+
 ## Conclusion
 
 Congrats, you have successfully used VMFs `equals()`and `hashCode()` implementations. 
