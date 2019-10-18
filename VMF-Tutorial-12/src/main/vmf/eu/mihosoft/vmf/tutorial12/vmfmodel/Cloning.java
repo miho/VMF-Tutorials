@@ -1,7 +1,9 @@
 package eu.mihosoft.vmf.tutorial12.vmfmodel;
 
-import eu.mihosoft.vmf.core.*;
+import eu.mihosoft.vmf.core.DelegateTo;
+import eu.mihosoft.vmf.core.VMFEquals;
 
+@VMFEquals
 interface Store {
 
     String getId();
@@ -13,6 +15,7 @@ interface Store {
 
 }
 
+@VMFEquals
 interface Item {
 
     String getId();
