@@ -5,19 +5,19 @@ buildscript {
 
 // load plugins
 plugins {
-    id "eu.mihosoft.vmf" version "0.2.7.1"
+    id "eu.mihosoft.vmf" version "0.2.7.2"
 }
 
 // gradle wrapper
 wrapper {
-    gradleVersion = '5.6'
+    gradleVersion = '6.0'
 }
 
 // set dependencies for intellij editor (otherwise vmf dir would be ignored)
 idea { 
     module {
         dependencies {
-           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.2.7.1"
+           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.2.7.2"
         }
     }
 }
