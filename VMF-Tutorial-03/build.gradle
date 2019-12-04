@@ -1,12 +1,22 @@
-// enable intellij integration
+// enable intellij integration & load vmf version to be used
 buildscript {
+
+    ext.commonProps = new Properties()
+    file(new File(projectDir.parentFile,"config/common.properties")).withInputStream { commonProps.load(it) }
+
     ext.vmfPluginIntelliJIntegration = true
+
+    repositories {
+        jcenter()
+    }
+    
+    dependencies {
+        classpath "eu.mihosoft.vmf:vmf-gradle-plugin:${project.commonProps.get('vmf.version')}"
+    }
 }
 
 // load plugins
-plugins {
-    id "eu.mihosoft.vmf" version "0.2.7.2"
-}
+apply plugin: 'eu.mihosoft.vmf'
 
 // gradle wrapper
 wrapper {
@@ -17,7 +27,7 @@ wrapper {
 idea { 
     module {
         dependencies {
-           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: "0.2.7.2"
+           compile group: 'eu.mihosoft.vmf', name: 'vmf', version: project.commonProps.get("vmf.version")
         }
     }
 }
