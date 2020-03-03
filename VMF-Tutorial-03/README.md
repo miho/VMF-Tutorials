@@ -100,9 +100,71 @@ If we check the output from the change listener we can clearly see that `parent.
 System.out.println("my new parent: " + child1.getParent().getName());
 ```
 
+## More on Containments
+
+VMF also suports list containments (one to many) which can be expressed as follows:
+
+```java
+import eu.mihosoft.vmf.core.*;
+
+interface Parent {
+    @Contains(opposite = "parent")
+    Child[] getChildren();
+}
+
+interface Child {
+    @Container(opposite="children")
+    Parent getParent();
+}
+```
+
+Now, we can add a child to a parent either via `parent.getChildren().add(child)` or alternatively, we can add a child to the parents list of children just by setting the parent property, i.e., `child.setParent(parent)`.
+
+If the parent has more than one containment property we cannot set the opposite as usual. Consider the following model:
+
+```java
+import eu.mihosoft.vmf.core.*;
+
+interface Parent {
+    @Contains(opposite = "parent")
+    Child getChild1();
+
+    @Contains(opposite = "parent")
+    Child getChild2();
+}
+
+interface Child {
+    @Container() // unclear which opposite to specify?
+    Parent getParent();
+}
+```
+
+Setting the `Child.parent` property does not have the effect of setting the opposite correctly. This is due to the fact that the opposite is unknown. Hence, the `Child.parent` property is read-only, i.e., it has no setter method (`Child.setParent()` does not exist in the interface).
+
+It is also possible to declare containments without an opposite property:
+
+
+```java
+import eu.mihosoft.vmf.core.*;
+
+interface Parent {
+    @Contains()
+    Child getChild1();
+
+    @Contains()
+    Child getChild2();
+}
+
+interface Child {
+
+}
+```
+
+In this case the container of `Child` is only known to the implementation of the `Child` interface.
+
 ## Conclusion
 
-Congrats, you have successfully declared your first containment reference.  
+Congrats, you have successfully declared your first containment reference and learned which forms of containment are supported by VMF.
 
 If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
 
