@@ -23,6 +23,7 @@ This collection of tutorials gives an introduction to [VMF](https://github.com/m
 - [Cloning (Deep Copy & Shallow Copy)](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-12/README.md)
 - [The Reflection API](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-13/README.md)
 - [Custom Model Documentation](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-14/README.md)
+- [External Types](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-15/README.md)
 
 
 ## Introduction

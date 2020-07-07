@@ -36,9 +36,18 @@ idea {
 sourceCompatibility = '1.8'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+repositories {
+    mavenLocal()
+    jcenter()
+}
+
+dependencies {
+    compile "eu.mihosoft.vvecmath:vvecmath:0.4.0"
+}
+
 // set default main class
 if (!hasProperty('mainClass')) {
-    ext.mainClass = 'eu.mihosoft.vmf.tutorial14.Main'
+    ext.mainClass = 'eu.mihosoft.vmf.tutorial15.Main'
 }
 
 // run the main class
