@@ -22,8 +22,8 @@ A VMF Maven Plugin is available for those who use Maven in order to build and ma
 When you use the VMF Maven Plugin in your project build it will take care for the following tasks
 - it supports VMF models in your source tree (during regular build) as well as VMF models in your test tree (during test execution)
 - it scans for all VMF models in the relevant sub tree of your project (source or test) and executes two steps
- - it generates Java code for all VMF models found
- - it compiles the generated Java classes to binary class file format afterwards
+  - it generates Java code for all VMF models found
+  - it compiles the generated Java classes to binary class file format afterwards
 
 ### How to use the VMF Maven Plugin?
 
