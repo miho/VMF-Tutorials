@@ -85,7 +85,7 @@ You can generate VMF Maven plugin help output by this invocation of the plugin:
 mvn help:describe -DgroupId=eu.mihosoft.vmf -DartifactId=vmf-maven-plugin -Dversion=0.2.8.0 -Ddetail=true
 ```
 
-Detailed description of the VMF Maven plugin can be found on the [plugin page in the VMF project](https://github.com/treimers/VMF/tree/master/maven-plugin).
+Detailed description of the VMF Maven plugin can be found on the [plugin page in the VMF project](https://github.com/miho/VMF/tree/master/maven-plugin).
 
 ## Conclusion
 
