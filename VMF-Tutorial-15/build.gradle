@@ -20,7 +20,7 @@ apply plugin: 'eu.mihosoft.vmf'
 
 // gradle wrapper
 wrapper {
-    gradleVersion = '6.5'
+    gradleVersion = '6.7.1'
 }
 
 // set dependencies for intellij editor (otherwise vmf dir would be ignored)
@@ -45,13 +45,9 @@ dependencies {
     compile "eu.mihosoft.vvecmath:vvecmath:0.4.0"
 }
 
-// set default main class
-if (!hasProperty('mainClass')) {
-    ext.mainClass = 'eu.mihosoft.vmf.tutorial15.Main'
-}
 
 // run the main class
 task run(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
-    main = mainClass
+    mainClass = 'eu.mihosoft.vmf.tutorial15.Main'
 }

@@ -16,7 +16,12 @@ for d in */; do
         echo " > compile & run project $d"; 
         echo "----------------------------------------"
         cd $DIR
-        cd $d && ./gradlew clean run --stacktrace
+        cd $d
+        if [ -f "./gradlew" ]; then
+          ./gradlew clean run --stacktrace
+        else 
+          echo "gradle wrapper not deteted. no project detected. skipping."
+        fi
     fi
 done
 

@@ -10,5 +10,12 @@ FOR /D /r %%d in ("VMF-Tutorial*") DO (
     echo "> compile & run project %%~nxd"
     echo "----------------------------------------"
     cd %DIR%
-    cd %%d && gradlew clean run --stacktrace
+    cd %%d
+
+    if exist gradlew (
+        gradlew wrapper clean run --stacktrace
+    ) else (
+        echo "gradle wrapper not deteted. no project detected. skipping."
+    )
+    
 )
