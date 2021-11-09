@@ -18,9 +18,9 @@ for d in */; do
         cd $DIR
         cd $d
         if [ -f "./gradlew" ]; then
-          ./gradlew clean run --stacktrace
+          ./gradlew wrapper clean run --stacktrace
         else 
-          echo "gradle wrapper not deteted. no project detected. skipping."
+          echo "gradle wrapper not detected. no project detected. skipping."
         fi
     fi
 done

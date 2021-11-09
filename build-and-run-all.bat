@@ -15,7 +15,7 @@ FOR /D /r %%d in ("VMF-Tutorial*") DO (
     if exist gradlew (
         gradlew wrapper clean run --stacktrace
     ) else (
-        echo "gradle wrapper not deteted. no project detected. skipping."
+        echo "gradle wrapper not detected. no project detected. skipping."
     )
     
 )
