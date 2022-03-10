@@ -47,7 +47,7 @@ Changing the state after instantiation is not possible:
 immutableObject.setValue(12);
 ```
 
-VMF also ensures that property types of immutables are immutable as well. Otherwise it
+VMF also ensures that property types of immutables are immutable as well. Otherwise, it
 would be possible to indirectly change the state of immutable objects.
 
 Just for comparison, this is how mutable objects can be initialized and modified:
