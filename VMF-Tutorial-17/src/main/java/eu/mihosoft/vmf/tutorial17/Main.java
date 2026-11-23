@@ -60,10 +60,20 @@ public class Main {
         Document working = Document.newBuilder().withId("doc-1").withTitle("Draft").build();
         mapper.writeValue(checkpointFile.toFile(), working);
 
-        ChangeJournal journal = JournalRecorder.recordFrame(working, BINDING, CHECKPOINT_ID, 0, model -> {
-            model.setTitle("Published");
-            model.getTags().add("reviewed");
-        });
+        ChangeJournal journal;
+        try (JournalRecorder recorder = JournalRecorder.start(working, BINDING, CHECKPOINT_ID, 0)) {
+            working.setTitle("Ready to publish");
+            working.getTags().add("reviewed");
+            recorder.publishFrame();
+
+            working.setTitle("Published");
+            recorder.publishFrame();
+
+            journal = recorder.finish();
+        }
+        for (var frame : journal.transactions()) {
+            System.out.printf("Frame %d: %d operations%n", frame.sequence(), frame.operations().size());
+        }
 
         for (Format format : Format.values()) {
             String extension = format.name().toLowerCase(Locale.ROOT);
