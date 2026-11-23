@@ -1,66 +1,38 @@
-# VMF Tutorial 5
+# Tutorial 05 · Use generated builders
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-06/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-04/README.md) · [Next](../VMF-Tutorial-06/README.md)
 
-## Using the Builder API
+Generate builders to set initial values and copy selected state between model objects. A `Node` inherits `name` from `WithName` and `id` from `WithId`. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial05/vmfmodel/Node.java) · [Java example](src/main/java/eu/mihosoft/vmf/tutorial05/Main.java)
 
-### What you will learn
-
-In this tutorial you will learn how to
-
-- create instances with the Builder API
-- copy state via the Builder API
-
-### Instantiating Objects
-
-For this tutorial we are going to use the following model:
+## Construct a node
 
 ```java
-package eu.mihosoft.vmf.tutorial05.vmfmodel;
-
-interface WithName {
-    String getName();
-}
-
-interface WithId {
-    int getId();
-}
-
-interface Node extends WithName, WithId {}
+Node source = Node.newBuilder()
+        .withName("Original")
+        .withId(3)
+        .build();
 ```
-Instead of just instantiating objects via `newInstance()` we can create builder, set the desired properties and build the instance:
+
+`Node.newBuilder()` accepts both inherited properties. Calling `build()` creates the node with those values.
+
+## Copy the name to an existing node
 
 ```java
-// create a new node instance
-Node node1 = Node.newBuilder().
-               withName("my node"). // set the name
-               withId(3).           // set the id
-               build();             // create the instance
+Node destination = Node.newBuilder()
+        .withName("Placeholder")
+        .withId(9)
+        .build();
+
+WithName.newBuilder().applyFrom(source).applyTo(destination);
 ```
 
-This is a convenient and compact way to declare properties before the actual instantiation. But there are even more applications of the builder API. It can selectively apply state (properties) defined in a class we inherit from to our instance. In this example, we could apply state from `node1` that is defined in `WithName` and apply it to another `Node` instance `node2`:
+`applyFrom` copies properties exposed by the builder type. The `WithName` builder reads the source name and writes it to `destination` through `applyTo`. The destination keeps its own ID.
 
-```java 
-// instantiate another node
-Node node2 = Node.newInstance();
+## Run the lesson
 
-// reference properties defined in 'WithName' from 'node1'
-// and apply it to 'node2':
-// - using the builder of a class we inherit from allows to selectively
-//   apply state defined in this class to another instance
-WithName.newBuilder().applyFrom(node1).applyTo(node2);
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
 
-// check that the 'name' property of 'node2' is equal to 'node1'
-System.out.println("> node1.name == node2.name: " + node1.getName().equals(node2.getName()));
+```text
+Source: Original (ID 3)
+Destination: Original (ID 9)
 ```
-
-## Conclusion
-
-Congrats, you have successfully used the Builder API to instantiate your domain objects.
-
-As always, if you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-05). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-06/README.md)
-
-
-

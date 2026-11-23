@@ -1,93 +1,45 @@
-# VMF Tutorial 9
+# Tutorial 09 · Property defaults
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-10/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-08/README.md) · [Next](../VMF-Tutorial-10/README.md)
 
-## Custom Default Values for Properties
+Use `@DefaultValue` to choose a property's initial value. VMF reports a property as unset whenever its current value equals its default.
 
-### What you will learn
+## Declare defaults
 
-In this tutorial you will learn how to
-
-- define default values
-- check if properties are set or unset
-
-### Declaring Default Values
-
-VMF properties can have default values. A default value is the initial state of a property. In general, properties can be set and unset. A property is defined as unset if it is equal to its default value. Usually, the default value is just `null`. But sometimes it is necessary to define a custom value as default. This can be achieved with the annotation `@DefaultValue(value="the value")`.
-
-The model below declares the entity `ObjectWithDefaultValues` with two properties `value` and `name`. The `value` property has the default value `23` and `name` has the default value `"my name"`. Here's the corresponding source code:
+Supply Java expressions in the annotations. The string literal includes escaped quotation marks so the generator can emit it as Java source. [Model](src/main/vmf/eu/mihosoft/vmf/tutorial09/vmfmodel/DefaultValues.java)
 
 ```java
-package eu.mihosoft.vmf.tutorial09.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
 interface ObjectWithDefaultValues {
-    
-    @DefaultValue(value="23")
+    @DefaultValue("23")
     Integer getValue();
 
-    @DefaultValue(value="\"my name\"")
+    @DefaultValue("\"my name\"")
     String getName();
-
 }
 ```
 
-If we create an instance its properties should already be set to the custom defaults:
+## Inspect and restore the default
 
 ```java
-// first, we create an object
-ObjectWithDefaultValues obj = ObjectWithDefaultValues.newInstance();
+ObjectWithDefaultValues object = ObjectWithDefaultValues.newInstance();
+var name = object.vmf().reflect().propertyByName("name").orElseThrow();
 
-// now we can get the default values
-System.out.println("Value: " + obj.getValue());
-System.out.println("Name:  " + obj.getName());
+System.out.println(name.isSet()); // false
+object.setName("another name");
+System.out.println(name.isSet()); // true
+name.unset();
+System.out.println(name.isSet()); // false
 ```
 
-### Checking whether Properties are set or unset
+`unset()` restores the default, so the final getter returns `"my name"`. Setting the property to that same value explicitly also makes `isSet()` return `false`.
 
-We can check whether the properties are set or unset:
+## Run the lesson
 
-```java
-// we use `p.isSet()` to check if the property is set
-Function<String,String> propertySetOrUnset = (propName) -> {
-    return obj.vmf().reflect().propertyByName(propName).
-        map(p->""+p.isSet()).orElse("<not available>");
-};
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`. The example displays both initial values and the name's status through a complete set-and-unset cycle. [Runnable example](src/main/java/eu/mihosoft/vmf/tutorial09/Main.java)
 
-// we expect both properties to be unset (`false`)
-System.out.println("Value is set:  " + propertySetOrUnset.apply("value") );
-System.out.println("Name is set:   " + propertySetOrUnset.apply("name")  );
+```text
+Initial value = 23, isSet = false
+Initial name = my name, isSet = false
+After set: name = another name, isSet = true
+After unset: name = my name, isSet = false
 ```
-
-We expect the properties to be unset (`false`). If we change the name property, it should be set:
-
-```java
-// if we set a property to a different value we expect it to be set (`true`)
-obj.setName("another name");
-System.out.println("Value is set:  " + propertySetOrUnset.apply("value") );
-System.out.println("Name is set:   " + propertySetOrUnset.apply("name")  );
-```
-
-If you run this code it should show that `name` is set (`true`).
-
-To revert back to the initial state, we can call the `unset()` method:
-
-```java
-// unset name property, name should be shown as unset (`true`)
-obj.vmf().reflect().propertyByName("name").ifPresent(p->p.unset());
-System.out.println("Value is set:  " + propertySetOrUnset.apply("value") );
-System.out.println("Name is set:   " + propertySetOrUnset.apply("name")  );
-```
-
-## Conclusion
-
-Congrats, you have successfully defined custom default values for properties. 
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-09). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-10/README.md)
-
-
-

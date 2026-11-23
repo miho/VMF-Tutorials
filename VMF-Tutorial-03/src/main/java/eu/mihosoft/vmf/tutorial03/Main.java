@@ -1,75 +1,39 @@
 package eu.mihosoft.vmf.tutorial03;
 
-import eu.mihosoft.vmf.runtime.core.Change;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
+import eu.mihosoft.vmf.runtime.core.Changes;
 
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
+        Parent firstParent = Parent.newBuilder().withName("Parent 1").build();
+        Parent secondParent = Parent.newBuilder().withName("Parent 2").build();
+        Child child = Child.newInstance();
 
-        // create a new parent instance
-        Parent parent = Parent.newInstance();
+        var values = firstParent.vmf().changes().addPropertyListener("value", change -> {
+            var edit = change.propertyChange().orElseThrow();
+            System.out.printf("Observed child value: %s -> %s%n", edit.oldValue(), edit.newValue());
+        }, Changes.Scope.RECURSIVE);
 
-        // register change listener
-        parent.vmf().changes().addListener(
-                (evt)-> {
-                    System.out.println("evt: " + evt.propertyName());
+        firstParent.setChild(child);
+        System.out.println("Initial parent: " + child.getParent().getName());
+        child.setValue(42);
 
-                    if(evt.propertyChange().isPresent()) {
-                        System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
-                        System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
-                    } else if (evt.listChange().isPresent()) {
-                        System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
-                    }
-                }
-        );
+        secondParent.setChild(child);
+        System.out.println("Original parent empty: " + (firstParent.getChild() == null));
+        System.out.println("New parent: " + child.getParent().getName());
+        System.out.println("Same child instance: " + (secondParent.getChild() == child));
+        child.setValue(43);
+        System.out.println("Child value after the move: " + child.getValue());
+        values.unsubscribe();
 
-        // cause a change by setting the name of parent
-        parent.setName("Parent 1");
+        TreeNode root = TreeNode.newBuilder().withName("Root").build();
+        TreeNode leaf = TreeNode.newBuilder().withName("Leaf").build();
+        root.getChildren().add(leaf);
+        System.out.println("List child's parent: " + leaf.getParent().getName());
 
-        System.out.println("--------");
-
-        // create a new child
-        Child child1 = Child.newInstance();
-
-        // add the child to the parent
-        parent.setChild(child1);
-
-        System.out.println("--------");
-
-        // containment references make it possible: the child automatically knows its parent
-        System.out.println("my parent: " + child1.getParent().getName());
-
-        System.out.println("--------");
-
-        // cause a change by setting the value property of child 1
-        // child 1 is implicitly observed
-        child1.setValue(42);
-
-        System.out.println("--------");
-
-        // now we create a second parent
-        Parent parent2 = Parent.newInstance();
-        parent2.setName("Parent 2");
-
-        // adding child 1 to parent2 has several interesting effects
-        // 1. child1 is removed from parent1 (check change notification output)
-        // 2. parent of child1 is now parent2
-        parent2.setChild(child1);
-        System.out.println("--------");
-
-        // containment references make it possible: the child automatically knows its new parent
-        System.out.println("my new parent: " + child1.getParent().getName());
-
-        System.out.println("--------");
-
+        try {
+            leaf.getChildren().add(root);
+        } catch (IllegalArgumentException cycle) {
+            System.out.println("Containment cycle rejected");
+        }
     }
 }

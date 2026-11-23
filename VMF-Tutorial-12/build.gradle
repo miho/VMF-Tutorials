@@ -1,49 +1,13 @@
-// enable intellij integration & load vmf version to be used
-buildscript {
-
-    ext.commonProps = new Properties()
-    file(new File(projectDir.parentFile,"config/common.properties")).withInputStream { commonProps.load(it) }
-    
-    ext.vmfPluginIntelliJIntegration = true
-
-    repositories {
-       mavenCentral()
-    }
-    
-    dependencies {
-        classpath "eu.mihosoft.vmf:vmf-gradle-plugin:${project.commonProps.get('vmf.version')}"
-    }
+plugins {
+    id 'application'
+    id 'eu.mihosoft.vmf'
 }
-
-// load plugins
-apply plugin: 'eu.mihosoft.vmf'
-
-// gradle wrapper
-wrapper {
-    gradleVersion = '7.2'
-}
-
-// set dependencies for intellij editor (otherwise vmf dir would be ignored)
-idea { 
-    module {
-        dependencies {
-           implementation group: 'eu.mihosoft.vmf', name: 'vmf', version: project.commonProps.get("vmf.version")
-        }
-    }
-}
-
-// configure java build
-sourceCompatibility = '11'
-targetCompatibility = '11'
-[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 repositories {
+    clear()
     mavenCentral()
 }
 
-
-// run the main class
-task run(type: JavaExec) {
-    classpath = sourceSets.main.runtimeClasspath
+application {
     mainClass = 'eu.mihosoft.vmf.tutorial12.Main'
 }

@@ -1,26 +1,15 @@
-# VMF Tutorial 3
+# Tutorial 03 · Containment references
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-03b/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-02/README.md) · [Next](../VMF-Tutorial-03b/README.md)
 
-## Containment References
+Containment establishes ownership. A model object can belong to one container at a time, and moving it preserves its identity. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial03/vmfmodel/Parent.java) · [Java example](src/main/java/eu/mihosoft/vmf/tutorial03/Main.java)
 
-### What you will learn
+## Attach and move a child
 
-In this tutorial you will learn how to
-
-- declare containment references
-
-### Declaring Containment References
-
-For this tutorial we use an updated version of the model definition. Instead of just a single interface, we use a `Parent` and a `Child` interface and declare a containment reference.
+Declare the owning property with `@Contains` and the back-reference with `@Container`. Opposite names are model property names such as `parent` and `child`.
 
 ```java
-package eu.mihosoft.vmf.tutorial03.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
 interface Parent {
-
     @Contains(opposite = "parent")
     Child getChild();
 
@@ -28,147 +17,40 @@ interface Parent {
 }
 
 interface Child {
-    @Container(opposite="child")
+    @Container(opposite = "child")
     Parent getParent();
 
     int getValue();
 }
 ```
 
-In the above code sample the `Parent` interface declares that it contains a `Child` object. Thus, we use the `@Contains()` annotation and declare the `parent` property of the `Child` interface as the opposite. In the `Child` interface we use the `@Container` annotation to indicate that the containing property in `Parent` is the `child` property.
+Calling `firstParent.setChild(child)` makes `child.getParent()` return `firstParent`. Calling `secondParent.setChild(child)` then clears the original parent's child and sets both ends of the new link. Read the completed links after the setter returns.
 
-Now let's instantiate a `Parent`, a `Child` and add the child to the parent.
+The example subscribes to `value` with `Changes.Scope.RECURSIVE` on the first parent. Its callback sees the change to `42` while the child is contained. The later change to `43` belongs to the second parent's subtree.
 
-```java
-Parent parent = Parent.newInstance();
+## Contain a list of children
 
-parent.setName("Parent 1");
-
-// register change listener
-parent.vmf().changes().addListener(
-   (evt)-> {
-       System.out.println("evt: " + evt.propertyName());
-
-       if(evt.propertyChange().isPresent()) {
-          System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
-          System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
-       } else if (evt.listChange().isPresent()) {
-          System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
-       }
-   }
-);
-
-Child child1 = Child.newInstance();
-
-// add the child to the parent
-parent.setChild(child1);
-```
-
-Now we can check the `getParent()` method, i.e. the `parent`property:
+Declare a list with `TreeNode[] getChildren()` in the model definition. VMF generates a mutable list getter. Adding a child through that list also sets the child's `parent` link.
 
 ```java
-// containment references make it possible: the child automatically knows its parent
-System.out.println("my parent: " + child1.getParent().getName());
+TreeNode root = TreeNode.newBuilder().withName("Root").build();
+TreeNode leaf = TreeNode.newBuilder().withName("Leaf").build();
+root.getChildren().add(leaf);
 ```
 
-If we make changes to `child1` we will get notified by the change listener even though we didn't add it to `child1` explicitly. 
+The example attempts to add `root` under `leaf` and catches the `IllegalArgumentException` for the containment cycle. For a model with multiple possible containing properties, a `@Container` getter without a named opposite is read-only. A `@Contains` property can also own children without exposing a back-reference in the model.
 
-```java
-// cause a change by setting the value property of child 1
-// child 1 is implicitly observed
-child1.setValue(42);
+## Run the lesson
+
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
+
+```text
+Initial parent: Parent 1
+Observed child value: 0 -> 42
+Original parent empty: true
+New parent: Parent 2
+Same child instance: true
+Child value after the move: 43
+List child's parent: Root
+Containment cycle rejected
 ```
-
-Since a containment reference cannot be shared between multiple containers, adding the `child1` instance to another `Parent` should remove `child1`from `parent`. Let's try this:
-
-```java
-// now we create a second parent
-Parent parent2 = Parent.newInstance();
-parent2.setName("Parent 2");
-
-// adding child 1 to parent2 has several interesting effects
-// 1. child1 is removed from parent1 (check change notification output)
-// 2. parent of child1 is now parent2
-parent2.setChild(child1);
-```
-If we check the output from the change listener we can clearly see that `parent.getChild()` has been updated automatically. Instead of `child1` it returns `null` since `child1` belongs to `parent2` now.
-
-`child1.getParent()` should now return `Parent 2` as its parent:
-
-```java
-// containment references make it possible: the child automatically knows its new parent
-System.out.println("my new parent: " + child1.getParent().getName());
-```
-
-## More on Containments
-
-VMF also suports list containments (one to many) which can be expressed as follows:
-
-```java
-import eu.mihosoft.vmf.core.*;
-
-interface Parent {
-    @Contains(opposite = "parent")
-    Child[] getChildren();
-}
-
-interface Child {
-    @Container(opposite="children")
-    Parent getParent();
-}
-```
-
-Now, we can add a child to a parent either via `parent.getChildren().add(child)` or alternatively, we can add a child to the parents list of children just by setting the parent property, i.e., `child.setParent(parent)`.
-
-If the parent has more than one containment property we cannot set the opposite as usual. Consider the following model:
-
-```java
-import eu.mihosoft.vmf.core.*;
-
-interface Parent {
-    @Contains(opposite = "parent")
-    Child getChild1();
-
-    @Contains(opposite = "parent")
-    Child getChild2();
-}
-
-interface Child {
-    @Container() // unclear which opposite to specify?
-    Parent getParent();
-}
-```
-
-Setting the `Child.parent` property does not have the effect of setting the opposite correctly. This is due to the fact that the opposite is unknown. Hence, the `Child.parent` property is read-only, i.e., it has no setter method (`Child.setParent()` does not exist in the interface).
-
-It is also possible to declare containments without an opposite property:
-
-
-```java
-import eu.mihosoft.vmf.core.*;
-
-interface Parent {
-    @Contains()
-    Child getChild1();
-
-    @Contains()
-    Child getChild2();
-}
-
-interface Child {
-
-}
-```
-
-In this case the container of `Child` is only known to the implementation of the `Child` interface.
-
-## Conclusion
-
-Congrats, you have successfully declared your first containment reference and learned which forms of containment are supported by VMF.
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-03b/README.md)
-
-
-

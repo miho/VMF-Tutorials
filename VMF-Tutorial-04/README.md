@@ -1,147 +1,48 @@
-# VMF Tutorial 4
+# Tutorial 04 · Undo and redo on a live model
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-03b/README.md) · [Next](../VMF-Tutorial-05/README.md)
 
-## Undo/Redo
+Record a rename and a child insertion as one edit. Both changes are then available for undo on the same working model. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial04/vmfmodel/Node.java) · [Java example](src/main/java/eu/mihosoft/vmf/tutorial04/Main.java)
 
-### What you will learn
-
-In this tutorial you will learn how to
-
-- clone an object graph
-- use the undo/redo API
-
-### The Model
-
-We use a model that declares a simple tree structure:
+## Record and reverse an edit
 
 ```java
-package eu.mihosoft.vmf.tutorial04.vmfmodel;
+var changes = root.vmf().changes();
+changes.start();
+changes.startTransaction();
+root.setName("Published");
+root.getChildren().add(child);
+changes.publishTransaction();
+changes.stop();
 
-import eu.mihosoft.vmf.core.*;
-
-interface Node {
-
-    String getName();
-
-    @Contains(opposite = "parent")
-    Node[] getChildren();
-
-    @Container(opposite = "children")
-    Node getParent();
-
+var edit = changes.transactions().get(0);
+if (edit.isUndoable()) {
+    edit.undo();
 }
 ```
 
-### The Code
+The setters and list operations edit the live model immediately. Publishing groups the already-recorded changes. Stop recording before undo or redo so these operations do not add to this recording. Undo applies the changes in reverse order and checks the live values or list positions. A later write can make the recorded edit ineligible for undo.
 
-First we create a `Node` instance and enable change recording for using the undo/redo API:
+## Reapply the changes
 
-```java
-// create a new parent instance
-Node root = Node.newInstance();
-
-// start change recorder for undo
-root.vmf().changes().start();
-```
-
-As always, we can add a changeListener:
+After undo, iterate over the recorded changes in their original order. Reapplying to `change.object()` uses the affected live object and preserves the identity of the inserted child.
 
 ```java
-// register change listener
-root.vmf().changes().addListener(
-        (evt)-> {
-            System.out.println("evt: " + evt.propertyName());
-            if(evt.propertyChange().isPresent()) {
-                System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
-                System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
-            } else if (evt.listChange().isPresent()) {
-                System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
-            }
-        }
-);
+for (Change change : edit.changes()) {
+    change.apply(change.object());
+}
 ```
 
-Now we add a child node and introduce some changes:
+To save edits and replay them against an independent checkpoint, see [Portable changes](../VMF-Tutorial-17/README.md).
 
-```java
-// cause a change by setting the name of parent
-root.setName("#1");
+## Run the lesson
 
-// create a new child
-Node child1 = Node.newInstance();
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
 
-// add the child to the parent
-root.getChildren().add(child1);
-
-// cause a change by setting the value property of child 1
-child1.setName("#2");
+```text
+After the edit: Published (children: 1)
+After undo: Draft (children: 0)
+After redo: Published (children: 1)
+Same child instance: true
+Undo allowed after a later edit: false
 ```
-
-Okay, now it's time to clone the `root` instance so we can check later whether undoing changes has an effect:
-
-```java
-// create a deep clone of root
-Node rootClone = root.vmf().content().deepCopy();
-```
-
-We can check whether cloning was successful. `root`and `rootClone` should be equal but not identical:
-
-```java
-// ensure that rootClone and parent are equal ...
-System.out.println("root eq rootClone: " + Objects.equals(root,rootClone));
-
-// ... but not identical
-System.out.println("root != rootclone: " + (root!=rootClone));
-
-// use automatically generated toString() method
-System.out.println(" -> root:      " + root);
-System.out.println(" -> rootClone: " + rootClone);
-```
-
-To check how many changes were recorded, we just access the collection that holds all changes:
-
-```java
-// show number of changes
-System.out.println("#changes: " + root.vmf().changes().all().size()+"\n");
-```
-
-To undo the changes we just have to revert the order of the change list
-
-```java
-// invert change order ...
-List<Change> changesToRevert = new ArrayList<>(root.vmf().changes().all());
-Collections.reverse(changesToRevert);
-```
-and undo the changes
-
-```java
-// ... and undo all changes
-changesToRevert.stream().forEach(c->{
-    System.out.println("-------- undo change: --------");c.undo();}
-);
-```
-The change listener will recognize the undo actions as changes as well. So watch the output for those changes.
-
-The `root` object should be empty. The `rootClone`, however, should contain all changes. Here's how to check that: 
-
-```java
-// after undo we compare the clone and the empty root (they are not equal)
-// we expect the root to be empty (all changes are reverted)
-System.out.println("--------");
-System.out.println("root eq rootClone: " + Objects.equals(root,rootClone));
-System.out.println(" -> root:          " + root);
-System.out.println(" -> rootClone:     " + rootClone);
-```
-
-## Conclusion
-
-Congrats, you have successfully used the VMF undo/redo API. 
-
-As always, if you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-04). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-05/README.md)
-
-
-
-

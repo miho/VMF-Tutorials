@@ -1,18 +1,21 @@
 package eu.mihosoft.vmf.tutorial14;
 
-import eu.mihosoft.vmf.runtime.core.Reflect;
-import eu.mihosoft.vmf.runtime.core.Type;
-
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        
-        // expore the API with your favourite IDE and see the custom documentation
-        // e.g.:
-        FSM fsm = FSM.newInstance();
-        
+        FSM machine = FSM.newBuilder().withName("Light switch").build();
+        State off = State.newBuilder().withName("Off").build();
+        State on = State.newBuilder().withName("On").build();
+        machine.getStates().addAll(java.util.List.of(off, on));
+        machine.setInitialState(off);
+        machine.setCurrentState(off);
+        machine.setFinalState(on);
+
+        Action action = Action.newBuilder().withName("Press switch").build();
+        Transition transition = Transition.newBuilder()
+                .withSource(off).withTarget(on).withAction(action).build();
+        machine.getTransitions().add(transition);
+
+        System.out.printf("%s: %s -> %s (%s)%n", machine.getName(),
+                transition.getSource().getName(), transition.getTarget().getName(), action.getName());
     }
 }

@@ -1,70 +1,40 @@
-# VMF Tutorial 3b
+# Tutorial 03b · Cross references
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-04/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-03/README.md) · [Next](../VMF-Tutorial-04/README.md)
 
-## Cross References
-
-### What you will learn
-
-In this tutorial you will learn how to
-
-- declare cross references
-
-### Declaring Cross References
-
-For this tutorial we use the following model definition:
+Use `@Refers` when an object can be linked from multiple places. Here a book can have several authors, and an author can be linked to several books. A book and its authors remain separate objects with their own lifetimes. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial03b/vmfmodel/Book.java) · [Java example](src/main/java/eu/mihosoft/vmf/tutorial03b/Main.java)
 
 ```java
-package eu.mihosoft.vmf.tutorial03b.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
 interface Book {
-
     String getTitle();
 
-    @Refers(opposite="books")
+    @Refers(opposite = "books")
     Author[] getAuthors();
 }
 
 interface Author {
     String getName();
 
-    @Refers(opposite="authors")
+    @Refers(opposite = "authors")
     Book[] getBooks();
 }
 ```
 
-In the above code sample the `Book` interface declares that it references one or many `Author` objects. Thus, we use the `@Refers()` annotation and declare the `books` property of the `Author` interface as the opposite. In the `Author` interface we use the `@Refers` annotation to indicate that the referenced property in `Book` is the `authors` property.
-
-Now let's instantiate a `Book`, a `Author` and add the author to the books `authors` list.
+The `opposite` names make each link reciprocal. Add a book through an author's builder or generated `getBooks()` list and the author's entry appears in `book.getAuthors()`. Removing a book from Lin's list removes Lin from the inverse list. Ada's link remains.
 
 ```java
-// create a book instance
 Book book = Book.newBuilder().withTitle("My Book").build();
-
-// and an author. we reference the book.
-Author author = Author.newBuilder().withName("The Author").withBooks(book).build();
+Author ada = Author.newBuilder().withName("Ada").withBooks(book).build();
+Author lin = Author.newBuilder().withName("Lin").withBooks(book).build();
+lin.getBooks().remove(book);
 ```
 
-Since we declared a cross reference we expect the book to reference the author. Now we can check the `getAuthors()` method, i.e. the `authors` property:
+## Run the lesson
 
-```java
-// cross references make it possible: the book also references the author
-if(book.getAuthors().size()==1) {
-    System.out.println("#referenced-author: "+ book.getAuthors().get(0));
-} else {
-    throw new RuntimeException("We referenced the book and therefore, the book has to reference the author.");
-}   
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
+
+```text
+Authors: [Ada, Lin]
+Authors after removing Lin's link: [Ada]
+Ada still lists the book: true
 ```
-
-## Conclusion
-
-Congrats, you have successfully declared your first cross reference.  
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-03b). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-04/README.md)
-
-
-

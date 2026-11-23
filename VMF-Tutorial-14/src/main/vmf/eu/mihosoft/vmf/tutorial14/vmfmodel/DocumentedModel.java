@@ -1,67 +1,60 @@
 package eu.mihosoft.vmf.tutorial14.vmfmodel;
 
-import eu.mihosoft.vmf.core.*;
+import eu.mihosoft.vmf.core.Container;
+import eu.mihosoft.vmf.core.Contains;
+import eu.mihosoft.vmf.core.Doc;
 
 @Doc("Represents a finite state machine.")
 interface FSM {
-
-    @Doc("Name of this finite state machine.")
+    @Doc("The name of this state machine.")
     String getName();
 
-    @Doc("The initial state of this finite state machine.")
+    @Doc("The state from which execution starts.")
     State getInitialState();
-    @Doc("The current state of this finite state machine.")
+
+    @Doc("The currently active state.")
     State getCurrentState();
-    @Doc("The final state of this finite state machine.")
+
+    @Doc("The state in which execution ends.")
     State getFinalState();
-    
-    @Doc("The complete state of this finite state machine.")
-    @Contains(opposite="owningFSM")
-    State[] getOwnedState();
-    
+
+    @Doc("The states owned by this state machine.")
+    @Contains(opposite = "owningFSM")
+    State[] getStates();
+
+    @Doc("The transitions owned by this state machine.")
+    @Contains(opposite = "owningFSM")
+    Transition[] getTransitions();
 }
 
-@Doc("Represents the state of a FSM.")
+@Doc("Represents a state in a state machine.")
 interface State {
-
-    @Doc("Name of this state.")
+    @Doc("The name of this state.")
     String getName();
-    
-    @Doc("FSM this state belongs to.")
-    @Container(opposite = "ownedState")
+
+    @Doc("The state machine that owns this state.")
+    @Container(opposite = "states")
     FSM getOwningFSM();
-    
-    @Doc("Outgoing transition of this state (connection to next state).")
-    @Contains(opposite="source")
-    Transition getOutgoingTransition();
-    @Doc("Incoming transition of this state (connection from previous state).")
-    @Contains(opposite="target")
-    Transition getIncomingTransition();
-    
 }
 
-
-@Doc("Transition between two states.")
+@Doc("A transition between two states.")
 interface Transition {
-    
-    @Doc("Source state.")
-    @Container(opposite="outgoingTransition")
+    @Doc("The state machine that owns this transition.")
+    @Container(opposite = "transitions")
+    FSM getOwningFSM();
+
+    @Doc("The state in which the transition starts.")
     State getSource();
-    @Doc("Target state.")
-    @Container(opposite="incomingTransition")
+
+    @Doc("The state that becomes active after the transition.")
     State getTarget();
-    
-    @Doc("Action that is executed when applying this transition.")
+
+    @Doc("The action associated with the transition.")
     Action getAction();
 }
 
-
-@Doc("Action that can be executed by the FSM.")
+@Doc("An action that the state machine can execute.")
 interface Action {
+    @Doc("The name of this action.")
     String getName();
 }
-
-
-
-
-

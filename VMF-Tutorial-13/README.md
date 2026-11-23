@@ -1,122 +1,48 @@
-# VMF Tutorial 13
+# Tutorial 13 · The reflection API
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-14/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-12/README.md) · [Next](../VMF-Tutorial-14/README.md)
 
-## The Reflection API
+VMF reflection lets tools discover a model's types and properties at runtime and work with properties by name. The [model](src/main/vmf/eu/mihosoft/vmf/tutorial13/vmfmodel/Reflection.java) defines a type `A` with a string property and a reference to another `A`. Type `B` extends `A`.
 
-### What you will learn
+## Inspect a type
 
-In this tutorial you will learn
-
-- what reflection is
-- how to use the VMF reflection for querying type information
-- how to use the VMF reflection to access and use properties reflectively
-- how to use the reflection API for accessing annotations
-
-There are also tutorials on [annotations](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-11/README.md) and [properties & default values](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-09/README.md).
-
-### What is Reflection?
-
-Reflection means that VMF models can analyze and modify their own structures 
-at runtime via API calls. Future versions might add the ability to reflectively
-add or change behavior via delegation.
-
-### Querying Type Information
-
-Consider the following model:
+Start with the generated interface's static type information. A property descriptor gives you its name and declared type.
 
 ```java
-package eu.mihosoft.vmf.tutorial13.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
-@Annotation(key="my-key", value="info about type a")
-interface A {
-    String getName();
-    A getA();
+Reflect type = A.type().reflect();
+for (Property property : type.properties()) {
+    System.out.printf("%s: %s (model type: %s)%n", property.getName(),
+            property.getType().getName(), property.getType().isModelType());
 }
-
-interface B extends A {}
 ```
 
-The first thing we will try is to get access to the type information of type `A` and `B`. For accessing the reflection API we have two possibilities:
+The `a` property has a model type, while `name` is a Java string. The [example](src/main/java/eu/mihosoft/vmf/tutorial13/Main.java) also uses `B.type().superTypes()` to find the parent type and `type.annotationByKey("my-key")` to read the annotation declared on `A`. See [Tutorial 11](../VMF-Tutorial-11/README.md) for property annotations.
 
-- access the static reflection API via the class object, e.g., `Reflect reflectionOfA = A.type().reflect()`
-- use the runtime reflection API from an instance of A, e.g., `Reflect reflectionOfA = a.vmf().reflect()`
+## Edit an instance
 
-We start with the static approach:
-
-```java
-Type typeOfA = A.type();
-Reflect reflectionOfA = typeOfA.reflect();
-```
-
-and query the number properties of `A`:
-
-```java
-System.out.println("Properties of A:");
-reflectionOfA.properties().forEach(p-> {
-    System.out.println(" -> " + p.getName());
-});
-```
-
-The output should show both properties defined in `A`, `name` as well as `a`. Each property object can set and unset
-the property as well as register change listeners. But this only works if the reflection API has been aquired via an instance
-since otherwise, it cannot set the instance properties. To demonstrate that, we retrieve the property by name, register
-a listener and set the property via reflection, instead of using the API directly (`a.setName("a name")`):
+Use `a.vmf().reflect()` to read or edit the values of a particular instance. This form also gives a listener a concrete object to observe.
 
 ```java
 A a = A.newInstance();
-a.vmf().reflect().propertyByName("name").ifPresent(p-> {
-    p.addChangeListener(c-> {
-        System.out.println("[CHANGE]:changed property 'name': " + p.get());
-    });
-
-    p.set("my new name");
-});
+Property name = a.vmf().reflect().propertyByName("name").orElseThrow();
+var listener = name.addChangeListener(change ->
+        System.out.println("name changed to " + a.getName()));
+name.set("my new name");
+listener.unsubscribe();
 ```
 
-The terminal output should show the change we made reflectively.
+The reflective call sets the same property as `a.setName(...)` and triggers its change listener.
 
-The property object gives access to the type of the property, can set and unset values etc. Now let's have a look at the type information provided by the reflection API. For that, we access the Type info of `B` and output its super types:
+## Run the lesson
 
-```java
-System.out.println("Super Types of B:");
-B.type().superTypes().forEach(t->{
-    System.out.println(" -> " + t.getName());
-});
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
+
+```text
+Properties of A:
+a: eu.mihosoft.vmf.tutorial13.A (model type: true)
+name: java.lang.String (model type: false)
+name changed to my new name
+Supertypes of B:
+eu.mihosoft.vmf.tutorial13.A
+Annotation on A: info about type a
 ```
-
-We expect just one parent type, which is `A`. The reflection API of a type can also give us access to the annotations. Let's the the annotations of type `A`:
-
-```java
-System.out.println("Annotations of A:");
-A.type().reflect().annotations().forEach(ann-> {
-    System.out.println(" -> " + ann.getKey() + ", " + ann.getValue());
-});
-```
-
-Finally, we can check whether a type is a model type or not. Let's revisit all properties just like in our first example and use the type objects of properties to query type name and whether it's a model type or not:
-
-```java
-System.out.println("Properties of A:");
-reflectionOfA.properties().forEach(p-> {
-    System.out.println(" -> property-name : " + p.getName());
-    System.out.println("    type name     : " + p.getType().getName());
-    System.out.println("    model-type    : " + p.getType().isModelType());
-});
-```
-
-If you run this code, you will see two properties in the output. Property `name` is no model-type, but property `a` is.
-
-## Conclusion
-
-Congrats, you have successfully used the reflectin API to analyze a models structure and  to set properties reflectively.
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-13). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-14/README.md)
-
-
-

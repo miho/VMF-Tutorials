@@ -1,55 +1,33 @@
-# VMF Tutorial 15
+# Tutorial 15 · Use an external Java type
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-14/README.md) · [Next](../VMF-Tutorial-16/README.md)
 
-## External Types
-
-### What you will learn
-
-In this tutorial you will learn
-
-- how to declare external types in the model without adding them to the classpath
-
-
-### What are external types
-
-External types are not part of the model. They belong to external libraries or frameworks.
-Even though VMF discourages their use, it is not fully inevitable. To improve the quality of
-the generated code it is necessary to establish an annotation to handle those cases. The first
-case that is soved is an external type that is not part of the classpath of the code generator
-but will be on the class or module path of the generated code used at runtime. Future extensions
-might improve the external type annotation to allow the definition of types which are treates as
-immutable etc.
-
-### How to use External Types in a Model?
-
-Consider the following model:
+Declare an external Java type in a model with `@ExternalType`. This lesson uses a VVecMath vector as the location in a [model object](src/main/vmf/eu/mihosoft/vmf/tutorial15/vmfmodel/ModelWithExternalTypes.java).
 
 ```java
-package eu.mihosoft.vmf.tutorial15.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
-@ExternalType(pkgName="eu.mihosoft.vvecmath")
-interface Vector3d {}
-
+@ExternalType(pkgName = "eu.mihosoft.vvecmath")
+interface Vector3d {
+}
 
 interface MyModel {
     Vector3d getLocation();
 }
 ```
 
-Instead of adding the `Vector3d` type to the classpath in can be declared in the model. The code generator uses the 
-surrogate type `Vector3d` during code generation. It replaces the package of the type with the specified package name.
+The empty interface gives the model definition a local type name. VMF uses `pkgName` and that name to put `eu.mihosoft.vvecmath.Vector3d` into the generated getter, setter, and builder signatures. That lets the model definition compile with VMF's annotations while the application's normal dependency supplies the real vector class to the generated code and at runtime.
 
-## Conclusion
+The [example](src/main/java/eu/mihosoft/vmf/tutorial15/Main.java) uses the library directly to construct the value.
 
-Congrats, you have successfully added external types to a VMF model.
+```java
+MyModel model = MyModel.newInstance();
+model.setLocation(Vector3d.xyz(1, 2, 3));
+Vector3d stored = model.getLocation();
+```
 
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-15). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
+## Run the lesson
 
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md)
-
-
-
+```text
+Location: 1.0, 2.0, 3.0
+```

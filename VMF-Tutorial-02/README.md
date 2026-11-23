@@ -1,89 +1,32 @@
-# VMF Tutorial 2
+# Tutorial 02 · Observe property changes
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-03/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-01/README.md) · [Next](../VMF-Tutorial-03/README.md)
 
-## Using the Change Notification API
-
-### What you will learn
-
-In this tutorial you will learn how to
-
-- use the change notification API to listen to property changes
-
-### Defining the Model
-
-For this tutorial we reuse the model from [Tutorial 1](https://github.com/miho/VMF-Tutorials/edit/master/VMF-Tutorial-01/README.md)
+Subscribe to changes of the `name` property on a generated `Parent`. The callback receives the property name and the old and new values. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial02/vmfmodel/Parent.java) · [Java example](src/main/java/eu/mihosoft/vmf/tutorial02/Main.java)
 
 ```java
-package eu.mihosoft.vmf.tutorial02.vmfmodel;
+Parent parent = Parent.newInstance();
+var subscription = parent.vmf().changes().addPropertyListener("name", change -> {
+    var values = change.propertyChange().orElseThrow();
+    System.out.printf("%s: %s -> %s%n", change.propertyName(), values.oldValue(), values.newValue());
+});
 
-interface Parent {
-    String getName();
-}
+parent.setName("Parent 1");
+parent.setName("Parent 2");
+subscription.unsubscribe();
+
+parent.setName("Parent 3");
+System.out.println("Name after unsubscribe: " + parent.getName());
 ```
 
-### Listening to Changes
+This subscription observes the named property on `parent`. VMF calls it synchronously during each setter. Keep the returned handle to end the subscription when the consumer is done. After `unsubscribe()`, the third setter still changes the model.
 
-First, we create a new instance of `Parent`. Now we can register a change listener. Notice, how all VMF related API can be accessed via the `vmf()` method. Here's the code:
+## Run the lesson
 
-```java
-package eu.mihosoft.vmf.tutorial02;
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
 
-public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-
-        // create a new parent instance
-        Parent parent = Parent.newInstance();
-
-        // register change listener
-        parent.vmf().changes().addListener(
-                (evt)-> {
-                    System.out.println("evt: " + evt.propertyName());
-
-                    if(evt.propertyChange().isPresent()) {
-                        System.out.println("  -> oldValue: " + evt.propertyChange().get().oldValue());
-                        System.out.println("  -> newValue: " + evt.propertyChange().get().newValue());
-                    } else if (evt.listChange().isPresent()) {
-                        System.out.println("  -> " + evt.listChange().get().toStringWithDetails());
-                    }
-                }
-        );
-
-        // cause a change by setting the name of parent
-        parent.setName("Parent 1");
-
-        // cause another  change
-        parent.setName("Parent 2");
-        
-    }
-}
+```text
+name: null -> Parent 1
+name: Parent 1 -> Parent 2
+Name after unsubscribe: Parent 3
 ```
-
-After registering the listener, we can make some changes to the name property (see `parent.setName(...)` calls). The output will look like this:
-
-```
-> Task :run
-evt: name
-  -> oldValue: null
-  -> newValue: Parent 1
-evt: name
-  -> oldValue: Parent 1
-  -> newValue: Parent 2
-```
-
-This is exactly what we expected. The first change indicates that property `name` was previously `null` and is now set to "Parent 1". The second change indicates that the `name` property was previously set to "Parent 1" and is now set to "Parent 2".
-
-## Conclusion
-
-Congrats, you have learned how to use the change notification API.  
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-02). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-03/README.md)
-
-
-

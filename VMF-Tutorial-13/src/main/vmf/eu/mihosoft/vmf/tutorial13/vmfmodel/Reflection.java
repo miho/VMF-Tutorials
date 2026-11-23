@@ -1,16 +1,12 @@
 package eu.mihosoft.vmf.tutorial13.vmfmodel;
 
-import eu.mihosoft.vmf.core.*;
+import eu.mihosoft.vmf.core.Annotation;
 
-@Annotation(key="my-key", value="info about type a")
+@Annotation(key = "my-key", value = "info about type a")
 interface A {
     String getName();
     A getA();
 }
 
-interface B extends A {}
-
-
-
-
-
+interface B extends A {
+}

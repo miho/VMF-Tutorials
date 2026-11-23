@@ -1,29 +1,19 @@
 package eu.mihosoft.vmf.tutorial05;
 
 public class Main {
-
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
+        Node source = Node.newBuilder()
+                .withName("Original")
+                .withId(3)
+                .build();
+        Node destination = Node.newBuilder()
+                .withName("Placeholder")
+                .withId(9)
+                .build();
 
-        // create a new node instance
-        Node node1 = Node.newBuilder().
-                withName("my node"). // set the name
-                withId(3).           // set the id
-                build();
+        WithName.newBuilder().applyFrom(source).applyTo(destination);
 
-        Node node2 = Node.newInstance();
-
-        // reference properties defined in 'WithName' from 'node1'
-        // and apply it to 'node2':
-        // - using the builder of a class we inherit from allows to selectively
-        //   apply state defined in this class to another instance
-        WithName.newBuilder().applyFrom(node1).applyTo(node2);
-
-        // check whether the 'name' property has been applied correctly
-        System.out.println("> node1.name == node2.name: " + node1.getName().
-            equals(node2.getName()));
-
+        System.out.printf("Source: %s (ID %d)%n", source.getName(), source.getId());
+        System.out.printf("Destination: %s (ID %d)%n", destination.getName(), destination.getId());
     }
 }

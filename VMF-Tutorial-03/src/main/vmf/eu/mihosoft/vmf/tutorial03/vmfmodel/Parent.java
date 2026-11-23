@@ -3,9 +3,7 @@ package eu.mihosoft.vmf.tutorial03.vmfmodel;
 import eu.mihosoft.vmf.core.Container;
 import eu.mihosoft.vmf.core.Contains;
 
-
 interface Parent {
-
     @Contains(opposite = "parent")
     Child getChild();
 
@@ -13,8 +11,18 @@ interface Parent {
 }
 
 interface Child {
-    @Container(opposite="child")
+    @Container(opposite = "child")
     Parent getParent();
 
     int getValue();
+}
+
+interface TreeNode {
+    String getName();
+
+    @Contains(opposite = "parent")
+    TreeNode[] getChildren();
+
+    @Container(opposite = "children")
+    TreeNode getParent();
 }

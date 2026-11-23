@@ -1,145 +1,65 @@
-# VMF Tutorial 6
+# Tutorial 06 · Graph traversal and property order
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-07/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-05/README.md) · [Next](../VMF-Tutorial-07/README.md)
 
-## Object Graph Traversal & Custom Property Order
+The model assigns traversal positions with `@PropertyOrder`. The example uses that order to visit and filter nodes. [Model](src/main/vmf/eu/mihosoft/vmf/tutorial06/vmfmodel/Node.java) · [Runnable example](src/main/java/eu/mihosoft/vmf/tutorial06/Main.java)
 
-### What you will learn
+## Define the order
 
-In this tutorial you will learn how to
-
-- traverse object graphs via streams
-- declare a property order that defines the order in which properties appear in the stream
-
-### Declaring the Property Order
-
-The model we are going to use consists of a `Node` entity with five properties. With the `@PropertyOrder(index = 0)` annotation we can define the index of each property, i.e., the order in which properties are processed. Here's the code of the full model:
+When you specify a custom order, annotate every property of the type with a unique index. Lower indices are processed first. The `Node` declarations place `child3` before `child2` and `child1`.
 
 ```java
-package eu.mihosoft.vmf.tutorial06.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
 interface Node {
-
-    @PropertyOrder(index = 0)
-    String getName();
-
-    @PropertyOrder(index = 1)
-    Boolean getVisible();
-
-    @PropertyOrder(index = 4)
-    Node getChild1();
-    @PropertyOrder(index = 3)
-    Node getChild2();
-    @PropertyOrder(index = 2)
-    Node getChild3();
+    @PropertyOrder(index = 0) String getName();
+    @PropertyOrder(index = 1) boolean isVisible();
+    @PropertyOrder(index = 4) Node getChild1();
+    @PropertyOrder(index = 3) Node getChild2();
+    @PropertyOrder(index = 2) Node getChild3();
 }
 ```
 
-### Setting up the Object Graph
-
-To set up the object graph, we create a root node and three children which we asssign after creating all four instances:
+## Traverse and filter
 
 ```java
-// create a new Node instance (this is our root)
-Node root = Node.newBuilder().withName("root").withVisible(true).build();
-
-// create two children
-Node child1 = Node.newBuilder().withName("child 1").withVisible(true).build();
-Node child2 = Node.newBuilder().withName("child 2").withVisible(true).build();
-Node child3 = Node.newBuilder().withName("child 3").withVisible(true).build();
-        
-// and add them to the root node
-root.setChild1(child1);
-root.setChild2(child2);
-root.setChild3(child3);
+root.vmf().content().stream(Node.class)
+        .forEach(node -> System.out.println(node.getName()));
 ```
 
-Now we can traverse the object graph. As with all VMF related functionality, we do this by using the `vmf()` API. More specifically, we obtain a stream via `root.vmf().content().stream(Node.class)` which is equivalent to `stream().filter(e->type.isAssignableFrom(e.getClass())).map(e->(T)e)`. Printing the traversed node names can be done via
+The stream starts with `root` and follows the model references in order, printing `child 3`, `child 2`, and `child 1`. Lists of model objects are also traversed. Use `root.vmf().reflect().properties()` to inspect all five properties in the same declared order.
 
-```java
-root.vmf().content().stream(Node.class).forEach(
-    (node)-> System.out.println("-> node: " + node.getName())
-);
+After `child2.setVisible(false)`, insert `.filter(Node::isVisible)` before `forEach` to omit that node from the output. The filter applies to the stream's results, so traversal can still reach descendants of a filtered node.
+
+## Choose a strategy
+
+- `UNIQUE_NODE` visits each object instance once and is the default.
+- `UNIQUE_PROPERTY` walks each node's properties once and can return the same object through different references.
+- `CONTAINMENT_TREE` follows only containment edges. This model uses ordinary references, so the containment traversal prints just `root`.
+
+Pass a strategy to `content().iterator(strategy)` or `content().stream(Node.class, strategy)`.
+
+## Run the lesson
+
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`.
+
+```text
+Object graph
+root
+child 3
+child 2
+child 1
+
+Root properties
+name
+visible
+child3
+child2
+child1
+
+Visible nodes
+root
+child 3
+child 1
+
+Containment tree
+root
 ```
-
-Usually, the expected output would be:
-
-```
-// -> node: root
-// -> node: child 1
-// -> node: child 2
-// -> node: child 3
-```
-
-But with the custom property order, we get the following result:
-
-```
-// -> node: root
-// -> node: child 3
-// -> node: child 2
-// -> node: child 1
-```
-
-Note, that only model-type properties are visited. That is why the `name` and `visible` properties are omitted. The same applies to collection properties. If the element type is a model-type, all elements are visited. The collection is omitted otherwise. The method `node.vmf().reflect().properties()` gives access to the complete list of properties of a node object. The list is orderd, i.e., properties will be in the same order as specified via the `@PropertyOrder` annotation. 
-
-### Filter Nodes
-
-We can easily declare nodes as invisible and use `filter()` to skip them during the object graph traversal:
-
-```java
-// -> child 2 should be invisible
-child2.setVisible(false);
-
-// we use the simple predicate `filter(Node::isVisible)` to filter invisible instances
-root.vmf().content().stream(Node.class).filter(Node::isVisible).forEach(
-    (node)-> System.out.println("-> node: " + node.getName())
-);
-```
-
-This should give us the following output:
-
-```
-// we should see the following output:
-// -> node: root
-// -> node: child 3
-// -> node: child 1
-```
-
-## Iteration Strategies
-
-There are three different iteration strategies for iterating over an object graph:
-
-- the **UNIQUE_NODE** strategy visits every object instance exactly once. If an instance is referenced multiple times
-  in the object graph it is still only visted once
-- the **UNIQUE_PROPERTY** strategy visits every property exactly once, no matter if multiple properties hold a reference to   the same object instance
-- the **CONTAINMENT_TREE** strategy visits only the containment graph and ignores everything else
-
-All three strategies prevent cyclic paths. Here are some examples on how to select a specific interation strategy:
-
-#### Stream API
-
-```java
-myGraph.vmf().content().stream(VIterator.IterationStrategy.UNIQUE_NODE).forEach(object->{
-  System.out.println(object);
-});
-```
-
-#### Iterator API
-
-```java
-VIterator it = myGraph.vmf().content().iterator(VIterator.IterationStrategy.CONTAINMENT_TREE);
-```
-
-## Conclusion
-
-Congrats, you have successfully declared a custom property order and used streams to traverse object graphs.  
-
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-06). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
-
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-07/README.md)
-
-
-

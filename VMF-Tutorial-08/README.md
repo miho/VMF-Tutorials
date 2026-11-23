@@ -1,47 +1,25 @@
-# VMF Tutorial 8
+# Tutorial 08 · Custom behavior and delegation
 
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-09/README.md)
+[Tutorial index](../README.md) · [Previous](../VMF-Tutorial-07/README.md) · [Next](../VMF-Tutorial-09/README.md)
 
-## Custom Behavior & Delegation
+Declare custom methods in the model and implement them in an ordinary Java delegate. Declare properties as getters and give custom methods names distinct from the generated accessors. [Model](src/main/vmf/eu/mihosoft/vmf/tutorial08/vmfmodel/CustomBehavior.java) · [Java delegate](src/main/java/eu/mihosoft/vmf/tutorial08/CustomBehavior.java)
 
-### What you will learn
-
-In this tutorial you will learn how to
-
-- implement custom functionality
-- use and implement the `DelegatedBehavior<T extends VObject>` interface
-
-### Declaring a Delegation Method
-
-Delegation methods are a convenient mechanism for providing custom functionality. Unlike other frameworks, VMF restricts custom behavior and does not allow modification of generated code. This doesn't mean that custom functionality can't be implemented. But it ensures that custom code is strictly separated from the generated code. Additionally, the namespace for custom functionality is restricted. Methods starting with `get...`, `set...` or `is...` are reserved for properties. Except for properties and the predefined methods, e.g., `vmf()` or `asReadOnly()`, method names for delegation can be freely chosen. 
-
-This is the model we are going to use:
+## Declare a delegated method
 
 ```java
-package eu.mihosoft.vmf.tutorial08.vmfmodel;
-
-import eu.mihosoft.vmf.core.*;
-
+@DelegateTo(className = "eu.mihosoft.vmf.tutorial08.CustomBehavior")
 interface ObjectWithCustomBehavior {
-    
     int getA();
     int getB();
 
-    @DelegateTo(className="eu.mihosoft.vmf.tutorial08.CustomBehavior")
+    @DelegateTo(className = "eu.mihosoft.vmf.tutorial08.CustomBehavior")
     int computeSum();
 }
 ```
 
-`ObjectWithCustomBehavior` has two properties `a` and `b`. Additionally, it declares a method `int computeSum()` that takes no arguments and returns an `int`. The annotation `@DelegateTo` defines which delegation class is used to perform the actual computation.
-
-
-This is how the delegation class looks like:
+The method annotation sends `computeSum()` calls to the Java delegate. Implement `DelegatedBehavior<ObjectWithCustomBehavior>` to receive the model object in `setCaller()`.
 
 ```java
-package eu.mihosoft.vmf.tutorial08;
-
-import eu.mihosoft.vmf.runtime.core.DelegatedBehavior;
-
 public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavior> {
     private ObjectWithCustomBehavior caller;
 
@@ -50,83 +28,23 @@ public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavio
         this.caller = caller;
     }
 
-    /**
-     * Delegated behavior. It is called whenever {@code caller.computeSum()} is called. 
-     * This method computes and returns the sum of property 'a' and 'b'.
-     * @return sum of 'a' and 'b'
-     */
     public int computeSum() {
         return caller.getA() + caller.getB();
     }
-}
-```
 
-It implements `DelegatedBehavior<ObjectWithCustomBehavior>` which declares just one method, `setCaller(T caller)`. This method is called during object initialization and gives us access to the caller that delegates to `CustomBehavior`. Then we just need to implement the custom behavior. In our case this is the method `int computeSum()`.
-
-### Calling a Delegation Method
-
-Now we can create an instance and try out our custom method:
-
-```java
-// first, we create an object
-ObjectWithCustomBehavior obj = ObjectWithCustomBehavior.newInstance();
-
-// them we set properties a and b
-obj.setA(2);
-obj.setB(3);
-
-// finally, we call our custom method and compute the sum of a + b
-int sum = obj.computeSum();
-
-System.out.println("Sum: " + sum);
-```
-
-### Custom Behavior during Instantiation
-
-If custom behavior should be executed during instantiation, it is possible to annotate the class directly:
-
-```java
-
-@DelegateTo(className="eu.mihosoft.vmf.tutorial08.CustomBehavior")
-interface ObjectWithCustomBehavior {
-
-}
-```
-
-Then the delegation class just needs one additional method that is called during instantiation: `onObjectWithCustomBehaviorInstantiated()`. The naming scheme is `on${ClassName}Instantiated()` where `${ClassName}` is the name of the model entity to be extended with custom behavior. Adding behavior during instantiation is convenient and allows to automatically register listeners to objects etc.
-
-The delegation code is shown below:
-
-```java
-package eu.mihosoft.vmf.tutorial08;
-
-import eu.mihosoft.vmf.runtime.core.DelegatedBehavior;
-
-public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavior> {
-    private ObjectWithCustomBehavior caller;
-
-    @Override
-    public void setCaller(ObjectWithCustomBehavior caller) {
-        this.caller = caller;
-    }
-    
-    /**
-     * Called if a new instance of {@code ObjectWithCustomBehavior} is created.
-     */
     public void onObjectWithCustomBehaviorInstantiated() {
-        System.out.println("object instantiated");
+        System.out.println("Object instantiated");
     }
 }
 ```
 
-## Conclusion
+The annotation on the type also runs the instantiation hook. VMF looks for a no-argument method named `on<TypeName>Instantiated()` and calls it after supplying the caller.
 
-Congrats, you have successfully implemented custom behavior. 
+## Run the lesson
 
-If you are lazy you can get the full project [here](https://github.com/miho/VMF-Tutorials/tree/master/VMF-Tutorial-08). To run the code checkout the corresponding [section in the introduction tutorial](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-01/README.md#running-the-tutorial).
+With JDK 21, run `./gradlew run` from this directory. On Windows, use `.\gradlew.bat run`. The example creates the object, sets `a` and `b` to 2 and 3, and calls `computeSum()`. [Runnable example](src/main/java/eu/mihosoft/vmf/tutorial08/Main.java)
 
-
-[HOME](https://github.com/miho/VMF-Tutorials/blob/master/README.md) [NEXT ->](https://github.com/miho/VMF-Tutorials/blob/master/VMF-Tutorial-09/README.md)
-
-
-
+```text
+Object instantiated
+Sum: 5
+```

@@ -10,16 +10,11 @@ public class CustomBehavior implements DelegatedBehavior<ObjectWithCustomBehavio
         this.caller = caller;
     }
 
-    /**
-     * Delegated behavior. It is called whenever {@code caller.computeSum()} is called. 
-     * This method computes and returns the sum of property 'a' and 'b'.
-     * @return sum of 'a' and 'b'
-     */
     public int computeSum() {
         return caller.getA() + caller.getB();
     }
 
     public void onObjectWithCustomBehaviorInstantiated() {
-        System.out.println("object instantiated");
+        System.out.println("Object instantiated");
     }
 }

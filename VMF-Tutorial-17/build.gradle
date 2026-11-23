@@ -1,0 +1,20 @@
+plugins {
+    id 'application'
+    id 'eu.mihosoft.vmf'
+}
+
+repositories {
+    clear()
+    mavenCentral()
+}
+
+def versions = new Properties()
+file('../config/common.properties').withInputStream { versions.load(it) }
+
+dependencies {
+    implementation "eu.mihosoft.vmf:vmf-jackson:${versions.getProperty('vmf.version')}"
+}
+
+application {
+    mainClass = 'eu.mihosoft.vmf.tutorial17.Main'
+}

@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        mavenCentral()
+    }
+    def versions = new Properties()
+    file('../config/common.properties').withInputStream { versions.load(it) }
+    plugins {
+        id 'eu.mihosoft.vmf' version versions.getProperty('vmf.version')
+    }
+}
+
+rootProject.name = 'VMF-Tutorial-17'
