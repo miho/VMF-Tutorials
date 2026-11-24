@@ -1,0 +1,13 @@
+plugins {
+    id 'application'
+    id 'eu.mihosoft.vmf'
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+application {
+    mainClass = 'eu.mihosoft.vmf.tutorial19.Main'
+}
