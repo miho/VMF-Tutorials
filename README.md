@@ -1,6 +1,6 @@
 # VMF Tutorials
 
-[VMF](https://github.com/miho/VMF) generates Java model APIs from annotated Java interfaces. Lessons 01–17 use [VMF 0.4.0](https://github.com/miho/VMF/releases/tag/v0.4.0). Lessons 18 and 19 use the collection feature branch and include local build instructions. Each lesson has a model definition and a program you can run.
+[VMF](https://github.com/miho/VMF) generates Java model APIs from annotated Java interfaces. Lessons 01–17 use [VMF 0.4.0](https://github.com/miho/VMF/releases/tag/v0.4.0). Lessons 18–20 use the collection and generics feature branch and include local build instructions. Each lesson has a model definition and a program you can run.
 
 ## Run a tutorial
 
@@ -16,7 +16,7 @@ Tutorial 16 uses Maven 3.9 and the VMF Maven plugin from Maven Central. From its
 
 ## Run every tutorial
 
-Install the feature builds described in [Tutorial 18](VMF-Tutorial-18/README.md) for lessons 18 and 19. From the repository root, run `./build-and-run-all.sh` on macOS or Linux, or `.\build-and-run-all.bat` on Windows. You'll need JDK 21 and Maven 3.9. Both scripts perform clean builds and stop if an example fails.
+Install the feature builds described in [Tutorial 18](VMF-Tutorial-18/README.md) for lessons 18–20. From the repository root, run `./build-and-run-all.sh` on macOS or Linux, or `.\build-and-run-all.bat` on Windows. You'll need JDK 21 and Maven 3.9. Both scripts perform clean builds and stop if an example fails.
 
 ## Contents
 
@@ -42,3 +42,4 @@ Install the feature builds described in [Tutorial 18](VMF-Tutorial-18/README.md)
 | 17 | [Portable change journals in JSON, YAML, and XML](VMF-Tutorial-17/README.md) |
 | 18 | [Multiplicity, lists and sets](VMF-Tutorial-18/README.md) |
 | 19 | [Looking up model objects by key](VMF-Tutorial-19/README.md) |
+| 20 | [Generic model relationships and existing JSON](VMF-Tutorial-20/README.md) |

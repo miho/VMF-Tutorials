@@ -1,0 +1,8 @@
+{
+  "items": [
+    { "sku": "G-27", "label": { "text": "Inspected" } }
+  ],
+  "labels": [
+    { "text": "Inspected" }
+  ]
+}

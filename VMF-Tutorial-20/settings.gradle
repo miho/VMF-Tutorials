@@ -1,0 +1,10 @@
+pluginManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    plugins {
+        id 'eu.mihosoft.vmf' version '0.4.1-SNAPSHOT'
+    }
+}
+rootProject.name = 'VMF-Tutorial-20'
