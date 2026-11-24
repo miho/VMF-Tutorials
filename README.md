@@ -1,6 +1,15 @@
 # VMF Tutorials
 
-[VMF](https://github.com/miho/VMF) generates Java model APIs from annotated Java interfaces. Lessons 01–17 use [VMF 0.4.0](https://github.com/miho/VMF/releases/tag/v0.4.0). Lessons 18–20 use the collection and generics feature branch and include local build instructions. Each lesson has a model definition and a program you can run.
+VMF generates Java model APIs from annotated Java interfaces. Each runnable lesson includes a model definition and a small Java program. [VMF project](https://github.com/miho/VMF)
+
+## VMF versions
+
+| Lessons | VMF target | Dependencies used by the examples |
+| --- | --- | --- |
+| 01–17 | `0.4.0` | Pinned to the [VMF 0.4.0 release](https://github.com/miho/VMF/releases/tag/v0.4.0). |
+| 18–20b | `0.4.1+` | Currently `0.4.1-SNAPSHOT`. The VMF runtime brings in VCollections `0.3.7-SNAPSHOT`. Tutorial 20 also uses `vmf-jackson:0.4.1-SNAPSHOT`. |
+
+The newer tutorials download their snapshots from Maven Central’s public snapshot repository on the first run. The plugin and Jackson module share the same [version pin](config/common.properties). If you have published your own builds to Maven Local, use `./gradlew -PvmfLocal run` or `.\gradlew.bat -PvmfLocal run` from the lesson directory to look there first.
 
 ## Run a tutorial
 
@@ -10,13 +19,13 @@ Install JDK 21 and clone this repository. From a Gradle tutorial directory, such
 ./gradlew run
 ```
 
-On Windows, run `.\gradlew.bat run`. The first build downloads Gradle and the released dependencies. The model definitions live under `src/main/vmf`, and the VMF plugin writes the generated Java sources to `build/generated-src/vmf-main`.
+On Windows, run `.\gradlew.bat run`. The wrapper downloads Gradle on the first run. The model definitions live under `src/main/vmf`, and the VMF plugin writes the generated Java sources to `build/generated-src/vmf-main`.
 
 Tutorial 16 uses Maven 3.9 and the VMF Maven plugin from Maven Central. From its directory, run `mvn clean verify` to generate the model, build the project, and run the example. [Maven tutorial](VMF-Tutorial-16/README.md)
 
 ## Run every tutorial
 
-Install the feature builds described in [Tutorial 18](VMF-Tutorial-18/README.md) for lessons 18–20. From the repository root, run `./build-and-run-all.sh` on macOS or Linux, or `.\build-and-run-all.bat` on Windows. You'll need JDK 21 and Maven 3.9. Both scripts perform clean builds and stop if an example fails.
+From the repository root, run `./build-and-run-all.sh` on macOS or Linux, or `.\build-and-run-all.bat` on Windows. You'll need JDK 21 and Maven 3.9. Both scripts perform clean builds and stop if an example fails.
 
 ## Contents
 
@@ -43,3 +52,4 @@ Install the feature builds described in [Tutorial 18](VMF-Tutorial-18/README.md)
 | 18 | [Multiplicity, lists and sets](VMF-Tutorial-18/README.md) |
 | 19 | [Looking up model objects by key](VMF-Tutorial-19/README.md) |
 | 20 | [Generic model relationships and existing JSON](VMF-Tutorial-20/README.md) |
+| 20b | [Choosing a generic bound](VMF-Tutorial-20/Tutorial-20b.md) (optional companion to Tutorial 20) |

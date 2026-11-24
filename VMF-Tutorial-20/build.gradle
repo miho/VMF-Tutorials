@@ -3,13 +3,11 @@ plugins {
     id 'eu.mihosoft.vmf'
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
+// Use the tutorial repositories from settings in place of VMF's defaults.
+repositories.clear()
 
 dependencies {
-    implementation 'eu.mihosoft.vmf:vmf-jackson:0.4.1-SNAPSHOT'
+    implementation libs.vmf.jackson
 }
 
 application {

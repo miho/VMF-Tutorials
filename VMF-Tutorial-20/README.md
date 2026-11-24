@@ -1,5 +1,7 @@
 # Tutorial 20 · Generic model relationships and existing JSON
 
+**VMF 0.4.1 and later.** This example currently uses `0.4.1-SNAPSHOT`. [Version guide](../README.md#vmf-versions)
+
 A supplier sends a catalog with an `items` array. Each instrument carries a SKU and an inline label. Open [the input document](src/main/resources/catalog.json) to see the entire wire format.
 
 The catalog and a spare-parts stockroom use the same `Shelf<T>`. A shelf owns an ordered set of products and can feature one of them. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial20/vmfmodel/Catalog.java)
@@ -51,4 +53,8 @@ The read-only types follow the same inheritance path. Through `ReadOnlyLocatedSh
 
 The default Jackson module reads the supplier’s `items` directly into the catalog. Each inline label describes a separate value. The program adds the featured instrument’s label to the catalog’s labels and saves with `withReferences(true)`. After reloading each shelf, it checks that the featured product is the very object in its collection. It also checks which of two equal-valued labels the instrument shares, and that the stockroom retains its location and the part’s pack size. [Runnable example](src/main/java/eu/mihosoft/vmf/tutorial20/Main.java)
 
-Run `./gradlew run` or `.\gradlew.bat run` on Windows. Install the feature builds described in [Tutorial 18](../VMF-Tutorial-18/README.md) first, then run `./gradlew publishToMavenLocal` in VMF’s `jackson` directory.
+For scalar bounds, related type parameters, and products that implement two model interfaces, see [Tutorial 20b · Choosing a generic bound](Tutorial-20b.md).
+
+## Run the example
+
+With JDK 21, open `VMF-Tutorial-20` and run `./gradlew run` on macOS or Linux, or `.\gradlew.bat run` on Windows.

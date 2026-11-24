@@ -1,5 +1,7 @@
 # Tutorial 19 · Looking up model objects by key
 
+**VMF 0.4.1 and later.** This example currently uses `0.4.1-SNAPSHOT`. [Version guide](../README.md#vmf-versions)
+
 A catalog owns its items. Looking up an item by SKU should return the very same object held by the catalog.
 
 ```java
@@ -21,4 +23,6 @@ interface Table<K, V> {
 interface StockByYear extends Table<Integer, Integer> {}
 ```
 
-Run `./gradlew run` (Windows: `.\gradlew.bat run`). This lesson uses the same local feature builds as [Tutorial 18](../VMF-Tutorial-18/README.md).
+## Run the example
+
+With JDK 21, open `VMF-Tutorial-19` and run `./gradlew run` on macOS or Linux, or `.\gradlew.bat run` on Windows.

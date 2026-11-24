@@ -1,5 +1,7 @@
 # Tutorial 18 · Multiplicity, lists and sets
 
+**VMF 0.4.1 and later.** This example currently uses `0.4.1-SNAPSHOT`. [Version guide](../README.md#vmf-versions)
+
 A workshop needs one to four stations. Its setup steps have an order and each step occurs once. A capability such as `"measure"` can be advertised once, in any order.
 
 ```java
@@ -21,4 +23,6 @@ The example creates two stations named “Inspection” that compare equal by co
 
 Calling `add("measure")` a second time returns `false` and produces no change event. The example subscribes with `change.setChange()` and reads the added members.
 
-Run `./gradlew run` (Windows: `.\gradlew.bat run`). This lesson uses the local VMF 0.4.1-SNAPSHOT feature build and VCollections 0.3.7-SNAPSHOT. Install the matching VCollections and VMF projects to Maven Local, in that order, with `./gradlew publishToMavenLocal` in each repository.
+## Run the example
+
+With JDK 21, open `VMF-Tutorial-18` and run `./gradlew run` on macOS or Linux, or `.\gradlew.bat run` on Windows.

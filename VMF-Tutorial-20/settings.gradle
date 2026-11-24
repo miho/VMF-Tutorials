@@ -1,10 +1,2 @@
-pluginManagement {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    plugins {
-        id 'eu.mihosoft.vmf' version '0.4.1-SNAPSHOT'
-    }
-}
+apply from: '../config/collection-tutorials.settings.gradle'
 rootProject.name = 'VMF-Tutorial-20'

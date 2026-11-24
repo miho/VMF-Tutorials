@@ -1,0 +1,42 @@
+// Shared by the standalone builds for Tutorials 18–20.
+def versions = new Properties()
+file('../config/common.properties').withInputStream { versions.load(it) }
+def vmfVersion = versions.getProperty('vmf.collections.version')
+def useLocal = providers.gradleProperty('vmfLocal').isPresent()
+
+def tutorialRepositories = {
+    if (useLocal) {
+        mavenLocal {
+            content {
+                includeGroup 'eu.mihosoft.vmf'
+                includeGroup 'eu.mihosoft.vcollections'
+            }
+        }
+    }
+    maven {
+        name = 'CentralSnapshots'
+        url = uri('https://central.sonatype.com/repository/maven-snapshots/')
+        mavenContent { snapshotsOnly() }
+        content {
+            includeGroup 'eu.mihosoft.vmf'
+            includeGroup 'eu.mihosoft.vcollections'
+        }
+    }
+    mavenCentral { mavenContent { releasesOnly() } }
+}
+
+settings.pluginManagement {
+    repositories(tutorialRepositories)
+    plugins {
+        id 'eu.mihosoft.vmf' version vmfVersion
+    }
+}
+
+dependencyResolutionManagement {
+    repositories(tutorialRepositories)
+    versionCatalogs {
+        libs {
+            library('vmf-jackson', 'eu.mihosoft.vmf', 'vmf-jackson').version(vmfVersion)
+        }
+    }
+}

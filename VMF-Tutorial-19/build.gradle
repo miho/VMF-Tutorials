@@ -3,10 +3,8 @@ plugins {
     id 'eu.mihosoft.vmf'
 }
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-}
+// Use the tutorial repositories from settings in place of VMF's defaults.
+repositories.clear()
 
 application {
     mainClass = 'eu.mihosoft.vmf.tutorial19.Main'
