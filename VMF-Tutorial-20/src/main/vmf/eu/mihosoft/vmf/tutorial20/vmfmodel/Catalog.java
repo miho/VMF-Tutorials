@@ -30,6 +30,17 @@ interface Instrument extends Product {
     Label getLabel();
 }
 
+@InterfaceOnly
+interface LocatedShelf<P extends Product> extends Shelf<P> {
+    String getLocation();
+}
+
+interface Stockroom extends LocatedShelf<SparePart> {}
+
+interface SparePart extends Product {
+    int getPackSize();
+}
+
 @Immutable
 interface Label {
     String getText();

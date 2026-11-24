@@ -2,21 +2,53 @@
 
 A supplier sends a catalog with an `items` array. Each instrument carries a SKU and an inline label. Open [the input document](src/main/resources/catalog.json) to see the entire wire format.
 
-The model declares a reusable `Shelf<T extends Product>`. Its `getProducts()` method owns an ordered set of products and maps to the supplier’s `items` field with `@Annotation(key = "vmf:jackson:rename", value = "items")`. The concrete declaration supplies the type of each item.
+The catalog and a spare-parts stockroom use the same `Shelf<T>`. A shelf owns an ordered set of products and can feature one of them. [Model definition](src/main/vmf/eu/mihosoft/vmf/tutorial20/vmfmodel/Catalog.java)
 
 ```java
+@InterfaceOnly
+interface Shelf<T extends Product> {
+    @Contains
+    @Multiplicity(kind = Multiplicity.Kind.ORDERED_SET)
+    @Annotation(key = "vmf:jackson:rename", value = "items")
+    T[] getProducts();
+
+    T getFeatured();
+}
+
 interface Catalog extends Shelf<Instrument> {
     Set<Label> getLabels();
 }
+
+@InterfaceOnly
+interface LocatedShelf<P extends Product> extends Shelf<P> {
+    String getLocation();
+}
+
+interface Stockroom extends LocatedShelf<SparePart> {}
 ```
 
-The default Jackson module reads this document directly as a `Catalog`. Each inline label describes a separate value. The generated Java types carry the binding through both views.
+`Catalog` binds `T` directly to `Instrument`. `LocatedShelf` adds a location and passes its own parameter `P` to `Shelf`. When `Stockroom` binds `P` to `SparePart`, its inherited `getProducts()` returns an `OrderedRefSet<SparePart>` and `getFeatured()` returns a `SparePart`.
+
+Both shelves contain an item, so the same method can feature the first product on either shelf.
+
+```java
+private static <T extends Product> T featureFirst(Shelf<T> shelf) {
+    T first = shelf.getProducts().get(0);
+    shelf.setFeatured(first);
+    return first;
+}
+```
 
 ```java
 Shelf<Instrument> shelf = catalog;
-ReadOnlyShelf<ReadOnlyInstrument> view = catalog.asReadOnly();
+Instrument gauge = featureFirst(shelf);
+
+LocatedShelf<SparePart> parts = stockroom;
+SparePart filter = featureFirst(parts);
 ```
 
-The example then selects the existing instrument as featured and adds its label to the catalog’s labels. At that point the graph contains two equal-valued labels, one shared between two properties. Saving with `withReferences(true)` preserves which instrument is featured and which label it shares. On reload the program checks both identities.
+The read-only types follow the same inheritance path. Through `ReadOnlyLocatedShelf<ReadOnlySparePart>` you can call `getLocation()` on the shelf and `getFeatured().getPackSize()` on its part. The corresponding catalog view is a `ReadOnlyShelf<ReadOnlyInstrument>`.
+
+The default Jackson module reads the supplier’s `items` directly into the catalog. Each inline label describes a separate value. The program adds the featured instrument’s label to the catalog’s labels and saves with `withReferences(true)`. After reloading each shelf, it checks that the featured product is the very object in its collection. It also checks which of two equal-valued labels the instrument shares, and that the stockroom retains its location and the part’s pack size. [Runnable example](src/main/java/eu/mihosoft/vmf/tutorial20/Main.java)
 
 Run `./gradlew run` or `.\gradlew.bat run` on Windows. Install the feature builds described in [Tutorial 18](../VMF-Tutorial-18/README.md) first, then run `./gradlew publishToMavenLocal` in VMF’s `jackson` directory.
