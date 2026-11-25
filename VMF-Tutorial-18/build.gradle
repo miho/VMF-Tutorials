@@ -6,6 +6,11 @@ plugins {
 // Use the tutorial repositories from settings in place of VMF's defaults.
 repositories.clear()
 
+dependencies {
+    implementation libs.vmf.jackson
+    implementation 'com.networknt:json-schema-validator:1.0.87'
+}
+
 application {
     mainClass = 'eu.mihosoft.vmf.tutorial18.Main'
 }

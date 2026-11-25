@@ -2,7 +2,10 @@ package eu.mihosoft.vmf.tutorial18.vmfmodel;
 
 import eu.mihosoft.vmf.core.Contains;
 import eu.mihosoft.vmf.core.Container;
+import eu.mihosoft.vmf.core.Length;
 import eu.mihosoft.vmf.core.Multiplicity;
+import eu.mihosoft.vmf.core.Pattern;
+import eu.mihosoft.vmf.core.Range;
 import eu.mihosoft.vmf.core.VMFEquals;
 import java.util.List;
 import java.util.Set;
@@ -26,5 +29,10 @@ interface Station {
     Workshop getWorkshop();
 
     @Multiplicity(lower = 1)
+    @Length(min = 2, max = 24)
+    @Pattern("^[A-Z][A-Za-z ]*$")
     String getName();
+
+    @Range(min = "1", max = "100")
+    int getPowerWatts();
 }

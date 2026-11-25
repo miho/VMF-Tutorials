@@ -7,9 +7,9 @@ VMF generates Java model APIs from annotated Java interfaces. Each runnable less
 | Lessons | VMF target | Dependencies used by the examples |
 | --- | --- | --- |
 | 01–17 | `0.4.0` | Pinned to the [VMF 0.4.0 release](https://github.com/miho/VMF/releases/tag/v0.4.0). |
-| 18–20b | `0.4.1+` | Currently `0.4.1-SNAPSHOT`. The VMF runtime brings in VCollections `0.3.7-SNAPSHOT`. Tutorial 20 also uses `vmf-jackson:0.4.1-SNAPSHOT`. |
+| 18–20b | `0.4.1+` | Currently `0.4.1-SNAPSHOT`. The VMF runtime brings in VCollections `0.3.7-SNAPSHOT`. Tutorials 18 and 20 also use `vmf-jackson:0.4.1-SNAPSHOT`. |
 
-The newer tutorials download their snapshots from Maven Central’s public snapshot repository on the first run. The plugin and Jackson module share the same [version pin](config/common.properties). If you have published your own builds to Maven Local, use `./gradlew -PvmfLocal run` or `.\gradlew.bat -PvmfLocal run` from the lesson directory to look there first.
+Tutorials 18–20 download their snapshots from Maven Central's public snapshot repository. The VMF plugin and Jackson module share the same [version pin](config/common.properties). To use builds published to Maven Local, run `./gradlew -PvmfLocal run` or `.\gradlew.bat -PvmfLocal run` from the lesson directory.
 
 ## Run a tutorial
 
@@ -49,7 +49,7 @@ From the repository root, run `./build-and-run-all.sh` on macOS or Linux, or `.\
 | 15 | [External property types](VMF-Tutorial-15/README.md) |
 | 16 | [Generating models with Maven](VMF-Tutorial-16/README.md) |
 | 17 | [Portable change journals in JSON, YAML, and XML](VMF-Tutorial-17/README.md) |
-| 18 | [Multiplicity, lists and sets](VMF-Tutorial-18/README.md) |
+| 18 | [Multiplicity, model validation, lists and sets](VMF-Tutorial-18/README.md) |
 | 19 | [Looking up model objects by key](VMF-Tutorial-19/README.md) |
 | 20 | [Generic model relationships and existing JSON](VMF-Tutorial-20/README.md) |
 | 20b | [Choosing a generic bound](VMF-Tutorial-20/Tutorial-20b.md) (optional companion to Tutorial 20) |
